@@ -2,21 +2,34 @@
 <html lang="en">
 
 <head>
-    <title>Sistem Informasi Rumah Sakit</title>
+    <title>Sistem Informasi BLT</title>
     <link rel="shortcut icon" href="/media/img/pwni.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/media/bootstrap/css/bootstrap.min.css ">
     <link rel="stylesheet" href="/media/bootstrap/admin.css ">
     <link rel="stylesheet" href="/media/bootstrap/main.css ">
+    <style type="text/css">
+        .selected{
+            background-color: #8cbbf5!important;
+        }
+        .fade{
+            transition: opacity .15s linear!important;
+        }
+    </style>
     <script src="/media/bootstrap/js/jquery.slim.min.js"></script>
     <script src="/media/bootstrap/js/jquery.js"></script>
+    <script src="/media/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/media/sweetalert/sweetalert.min.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-dark sticky-top bg-blue flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Hi! SiRusa <img src="..\media\img\pwni.png" style="float: right" width="25px" alt=""></a>
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">SIS - BLT <img src="..\media\img\pwni.png" style="float: right" width="25px" alt=""></a>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link text-white" href="<?php echo base_url('login') ?>">Keluar</a>
+                <a class="nav-link text-white" href="/login">Keluar</a>
             </li>
         </ul>
     </nav>
@@ -28,22 +41,19 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <img src="/media/img/pwni.png" alt="" style="width:100px;margin-left: 4.2rem;">
-                            <a class="nav-link active text-white text-center" href="">
-                                Bagas Ariefia Pribady 
-                            </a>
                             <hr class="bg-light">
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active text-white" href="<?php echo base_url('public/pasien') ?>">
-                                <span data-feather="users"></span>
-                                Pasien <span class="sr-only">(current)</span>
-                            </a>
-                            <hr class="bg-light">
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="<?php echo base_url('public/riwayat_layanan') ?>">
+                            <a class="nav-link text-white" href="/transaksi">
                                 <span data-feather="file"></span>
-                                Riwayat Layanan Pasien
+                                Transaksi
+                            </a>
+                            <hr class="bg-light">
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/plafon">
+                                <span data-feather="file"></span>
+                                Plafon Anggaran
                             </a>
                             <hr class="bg-light">
                         </li>
@@ -53,10 +63,12 @@
                                 Data Master
                             </a>
                             <div class="dropdown-container">
-                                <a class="nav-link text-white" href="<?php echo base_url('public/master_dokter') ?>"><span data-feather="file"></span>Dokter</a>
-                                <a class="nav-link text-white" href="<?php echo base_url('public/master_pegawai') ?>"><span data-feather="file"></span>Pegawai</a>
-                                <a class="nav-link text-white" href="<?php echo base_url('public/master_obat') ?>"><span data-feather="file"></span>Obat</a>
-                                <a class="nav-link text-white" href="<?php echo base_url('public/master_asuransi_jiwa') ?>"><span data-feather="file"></span>Asuransi Jiwa</a>
+                                <a class="nav-link text-white" href="/master_penduduk"><span data-feather="file"></span>Penduduk</a>
+                                <a class="nav-link text-white" href="/master_kk"><span data-feather="file"></span>Kartu Keluarga</a>
+                                <a class="nav-link text-white" href="/master_jenis_bantuan"><span data-feather="file"></span>Jenis Bantuan</a>
+                                <a class="nav-link text-white" href="/master_tingkat_adm"><span data-feather="file"></span>Tingkat Administrasi</a>
+                                <a class="nav-link text-white" href="/master_status"><span data-feather="file"></span>Status</a>
+                                <a class="nav-link text-white" href="/master_pengguna"><span data-feather="file"></span>Pengguna</a>
                             </div>
                             <hr class="bg-light">
                         </li>

@@ -1,0 +1,60 @@
+<?php namespace App\Models;
+ 
+use CodeIgniter\Model;
+ 
+class T_pengajuan extends Model
+{
+    protected $db;
+
+	public function __construct()
+	{
+		$db = \Config\Database::connect();
+		$this->db =& $db;
+	}
+     
+    public function get_pengajuan()
+    {
+        $q = $this->db->table('t_pengajuan')
+        ->join('m_user', 'm_user.id_user = t_pengajuan.id_user_pengajuan', 'left')
+        ->join('m_penduduk', 'm_penduduk.id_penduduk = t_pengajuan.id_penduduk', 'left')
+        ->join('m_kk', 'm_kk.id_kk = m_penduduk.id_kk', 'left')
+        ->join('m_jenis_bantuan', 'm_jenis_bantuan.id_jenis_bantuan = t_pengajuan.id_jenis_bantuan', 'left')
+        ->join('m_status', 'm_status.id_status = t_pengajuan.id_status', 'left')
+        ->where('t_pengajuan.id_status not in (4,5,6)')
+        ->orderBy('t_pengajuan.id_status', 'desc')
+        ->get()->getResult();
+        foreach ($q as $k => $a) {
+            $q[$k]->no = $k+1;
+            $q[$k]->bantu = $a->nama_jenis_bantuan.'('.$a->nominal.' '.$a->satuan.')';
+        }
+        return $q;
+    }
+
+    public function get_pengajuan_dashboard()
+    {
+        //->select('m_user.nama_penduduk', 'm_user.alamat', 'm_user.no_ktp', 't_pengajuan.tanggal_pengajuan', 'm_status.nama_status')
+        $q = $this->db->table('t_pengajuan')
+        ->join('m_user', 'm_user.id_user = t_pengajuan.id_user_pengajuan', 'left')
+        ->join('m_penduduk', 'm_penduduk.id_penduduk = t_pengajuan.id_penduduk', 'left')
+        ->join('m_kk', 'm_kk.id_kk = m_penduduk.id_kk', 'left')
+        ->join('m_jenis_bantuan', 'm_jenis_bantuan.id_jenis_bantuan = t_pengajuan.id_jenis_bantuan', 'left')
+        ->join('m_status', 'm_status.id_status = t_pengajuan.id_status', 'left')
+        ->where('t_pengajuan.id_status not in (4,5,6)')
+        ->orderBy('t_pengajuan.id_status', 'desc')
+        ->get()->getResult();
+        return $q;
+    }
+
+    public function get_bantuan_tersalurkan_dashboard()
+    {
+        $q = $this->db->table('t_pengajuan')
+        ->select(['m_jenis_bantuan.nama_jenis_bantuan', 'm_jenis_bantuan.satuan'])
+        ->selectSum('m_jenis_bantuan.nominal')
+        ->join('m_jenis_bantuan', 'm_jenis_bantuan.id_jenis_bantuan = t_pengajuan.id_jenis_bantuan', 'left')
+        ->where('t_pengajuan.id_status not in (4,5,6)')
+        ->groupBy('m_jenis_bantuan.nama_jenis_bantuan', 'm_jenis_bantuan.satuan')
+        ->orderBy('t_pengajuan.id_status', 'desc')
+        ->get()->getResult();
+        return $q;
+    }
+}
