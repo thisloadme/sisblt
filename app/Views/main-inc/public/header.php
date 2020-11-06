@@ -26,11 +26,13 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <?php if (strpos(current_url(), 'login') > -1): ?>
-                            <a class="nav-link" href="/dashboard">Dashboard <span class="sr-only"></span></a>
-                        <?php else: ?>  
-                            <a class="nav-link" href="/login">Login <span class="sr-only"></span></a>    
-                        <?php endif ?>
+                        <a class="nav-link" href="/login">Login <span class="sr-only"></span></a>    
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Dashboard <span class="sr-only"></span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/cek_bantuan">Status Penerimaan<span class="sr-only"></span></a>
                     </li>
                 </ul>
             </div>

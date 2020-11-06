@@ -15,8 +15,7 @@ class M_penduduk extends Model
      
     public function get_penduduk()
     {
-        $q = $this->db->table('m_penduduk')->join('m_kk', 'm_kk.id_kk = m_penduduk.id_kk')
-        ->get()->getResult();
+        $q = $this->db->table('m_penduduk')->get()->getResult();
         foreach ($q as $k => $a) {
         	$q[$k]->no = $k+1;
         	$q[$k]->ttl = $a->tempat_lahir.', '.date('d F Y', strtotime($a->tanggal_lahir));

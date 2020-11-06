@@ -60,6 +60,44 @@
               <input type="text" class="form-control" name="nama_penduduk" id="nama_penduduk" placeholder="Nama Sesuai KTP">
             </div>
             <div class="form-group">
+              <label for="sel1">Alamat Sesuai KTP</label>
+              <select class="form-control" name="kecamatan" id="kec">
+                <option value="" selected disabled>Pilih Kecamatan</option>
+                <option value="Banjarnegara">Banjarnegara</option>
+                <option value="Sokanandi">Sokanandi</option>
+                <option value="Mandiraja">Mandiraja</option>
+                <option value="Wanadadi">Wanadadi</option>
+              </select>
+              </p>
+              <select class="form-control" id="kel" name="kelurahan">
+                <option value="" selected disabled>Pilih Kelurahan/Desa</option>
+                <option value="Kutabanjarnegara">Kutabanjarnegara</option>
+                <option value="Kukurambut">Kukurambut</option>
+                <option value="Mandiraja">Mandiraja</option>
+                <option value="Wanadadi">Wanadadi</option>
+              </select>
+              </p>
+              <select class="form-control" id="rw" name="rw">
+                <option value="" selected disabled>Pilih RW</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+              </select>
+              </p>
+              <select class="form-control" id="rt" name="rt">
+                <option value="" selected disabled>Pilih RT</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+              </select>
+            </div>
+            <div class="form-group">
               <label for="tempat_lahir">Tempat Lahir</label>
               <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" placeholder="Tempat Lahir">
             </div>
@@ -156,19 +194,24 @@
           { 'data': 'nama_penduduk' },
           { 'data': 'ttl' },
           { 'data': 'jenis_kelamin' },
-          { 'data': 'alamat' },
+          { 
+            'data': 'kec',
+            render: function ( data, type, row ) {
+                return row.kec + ', ' + row.kel + ' RT ' + row.rt + ' RW '+ row.rw + ' ';
+            }
+          },
           { 'data': 'agama' },
           { 'data': 'status_kawin' },
           { 'data': 'pekerjaan' },
           { 'data': 'kewarganegaraan' },
-          { 'data': 'no_kk' },
+          { 'data': 'id_kk' },
         ],
         "paging": true,
         "lengthChange": false,
         "searching": true,
         "ordering": true,
         "info": true,
-        "autoWidth": false,
+        "autoWidth": true,
         "responsive": true,
         createdRow: function( row, data, dataIndex ) {
             $(row).attr('data-id', data.id_penduduk);
@@ -182,14 +225,18 @@
     }else{
       var id_penduduk = null;
     }
-
-    let myForm = $('#form-tambah')[0];
-    let formData = new FormData(myForm);
-    formData.append('id', id_penduduk);
-
+    var tipe = $('#tipe').val();
+    let formData = $("#form-tambah").serializeArray();
+    formData.push({"name":"id","value":id_penduduk},{"name":"tipe","value":tipe});
+    var data = {};
+    
+    $.map(formData, function(n, i){
+        data[n['name']] = n['value'];
+    });
+    console.log(data);
     $.ajax({
       url: '/master_penduduk/simpan',
-      data: formData,
+      data: data,
       method: 'post',
       success: function(data){
         var obj = JSON.parse(data);
@@ -205,20 +252,36 @@
   })
 
   $('.btn-tambah').click(function(){
-    $('#judul_modal_tambah').html('Tamba hStatus')
+    $('#judul_modal_tambah').html('Tambah Data Penduduk')
     $('#tipe').val('add')
-    $('#form-tambah').find('input').val('')
-    $('#form-tambah').find('select').val('')
     $('#modal-tambah').modal('show')
   })
 
   $('.btn-ubah').click(function(){
     var id = $('#example2 tbody tr.selected').length
-    var nama = $('#example2 tbody tr.selected td:nth-child(2)').text();
+
+    var idx = table.cell('.selected', 0).index();
+    var data = table.row( idx.row ).data();
+
+    var id_penduduk = data.id_penduduk;
+
     if (id > 0) {
-      $('#judul_modal_tambah').html('Ubah Status')
+      $('#judul_modal_tambah').html('Ubah Data Penduduk')
       $('#tipe').val('edit')
-      $('#nama_status').val(nama)
+      $('#agama').val(data.agama)
+      $('#no_kk').val(data.id_kk)
+      $('#jenis_kelamin').val(data.jenis_kelamin)
+      $('#kec').val(data.kec)
+      $('#kel').val(data.kel)
+      $('#rw').val(data.rt)
+      $('#no_ktp').val(data.no_ktp)
+      $('#nama_penduduk').val(data.nama_penduduk)
+      $('#rt').val(data.rt)
+      $('#tempat_lahir').val(data.tempat_lahir)
+      $('#tanggal_lahir').val(data.tanggal_lahir)
+      $('#status_kawin').val(data.status_kawin)
+      $('#pekerjaan').val(data.pekerjaan)
+      $('#kewarganegaraan').val(data.kewarganegaraan)
       $('#modal-tambah').modal('show')
     }else{
       swal('Tidak ada data yang terpilih', {icon: 'warning'});
@@ -235,7 +298,10 @@
   })
 
   $('.btn-proses-hapus').click(function(){
-    var id_penduduk = $('#example2 tbody tr.selected').data('id');
+    var idx = table.cell('.selected', 0).index();
+    var data = table.row( idx.row ).data();
+    var id_penduduk = data.id_penduduk;
+    
     $.ajax({
       url: '/master_penduduk/hapus',
       data: {

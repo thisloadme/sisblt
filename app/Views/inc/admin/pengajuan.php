@@ -54,7 +54,7 @@
               <label for="password">Nama Penduduk</label>
               <div class="input-group">
                 <input type="hidden" name="id_penduduk" id="id_penduduk">
-                <input type="text" name="nama_penduduk" id="nama_penduduk" class="form-control" readonly="" value="Dion Budi Riyanto">
+                <input type="text" name="nama_penduduk" id="nama_penduduk" class="form-control" readonly="" value="">
                 <span class="input-group-append">
                   <button type="button" class="btn btn-primary btn-flat btn-cari">Cari...</button>
                 </span>
@@ -62,19 +62,53 @@
             </div>
             <div class="form-group">
               <label for="No_KTP">No KTP</label>
-              <input type="text" class="form-control" id="No_KTP" readonly="" value="3304062909000001">
+              <input type="text" class="form-control" id="No_KTP" readonly="" value="">
             </div>
             <div class="form-group">
               <label for="No_KK">No KK</label>
-              <input type="text" class="form-control" id="No_KK" readonly="" value="330406211211000001">
+              <input type="text" class="form-control" id="No_KK" readonly="" value="">
             </div>
             <div class="form-group">
-              <label for="alamat">Alamat</label>
-              <input type="text" class="form-control" id="alamat" readonly="" value="RT 3 RW 1">
+              <label for="sel1">Alamat Sesuai KTP</label>
+              <select class="form-control" name="kecamatan" readonly="" id="kec">
+                <option value="" selected disabled>Pilih Kecamatan</option>
+                <option value="Banjarnegara">Banjarnegara</option>
+                <option value="Sokanandi">Sokanandi</option>
+                <option value="Mandiraja">Mandiraja</option>
+                <option value="Wanadadi">Wanadadi</option>
+              </select>
+              </p>
+              <select class="form-control" readonly="" id="kel" name="kelurahan">
+                <option value="" selected disabled>Pilih Kelurahan/Desa</option>
+                <option value="Kutabanjarnegara">Kutabanjarnegara</option>
+                <option value="Kukurambut">Kukurambut</option>
+                <option value="Mandiraja">Mandiraja</option>
+                <option value="Wanadadi">Wanadadi</option>
+              </select>
+              </p>
+              <select class="form-control" readonly="" id="rw" name="rw">
+                <option value="" selected disabled>Pilih RW</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+              </select>
+              </p>
+              <select class="form-control" readonly="" id="rt" name="rt">
+                <option value="" selected disabled>Pilih RT</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="pekerjaan">Pekerjaan</label>
-              <input type="text" class="form-control" id="pekerjaan" readonly="" value="Karyawan">
+              <input type="text" class="form-control" id="pekerjaan" readonly="" value="">
             </div>
             <div class="form-group">
               <label for="bantuan">Besaran Bantuan</label>
@@ -126,7 +160,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modal-cari-penduduk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal-cari-penduduk" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="max-width: 1250px!important">
       <div class="modal-content">
         <div class="modal-header">
@@ -168,11 +202,11 @@
 
 <script type="text/javascript">
   var table;
-
+  var tablependuduk;
   $(document).ready(function(){
     get_data();
 
-    $('#tablependuduk').DataTable({
+    tablependuduk = $('#tablependuduk').DataTable({
       "ajax": '/master_penduduk/get_data',
       "columns": [
         { 'data': 'no' },
@@ -232,6 +266,28 @@
     }else {
       $('#tablependuduk tbody tr').removeClass('selected');
       $(this).addClass('selected');
+    }
+  })
+
+  $('.btn-proses-ajukan').click(function(){
+    var id = $('#tablependuduk tbody tr.selected').length
+
+    var idx = tablependuduk.cell('.selected', 0).index();
+    var data = tablependuduk.row( idx.row ).data();
+
+    if (id > 0) {
+      $('#id_penduduk').val(data.id_penduduk)
+      $('#nama_penduduk').val(data.nama_penduduk)
+      $('#No_KTP').val(data.no_ktp)
+      $('#No_KK').val(data.id_kk)
+      $('#kec').val(data.kec)
+      $('#kel').val(data.kel)
+      $('#rw').val(data.rw)
+      $('#rt').val(data.rt)
+      $('#pekerjaan').val(data.pekerjaan)
+      $('#modal-cari-penduduk').modal('hide')
+    }else{
+      swal('Tidak ada data yang terpilih', {icon: 'warning'});
     }
   })
 
