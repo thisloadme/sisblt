@@ -5,7 +5,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-primary text-white btn-tambah">Tambah</button>
-                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-warning text-white btn-ubah">Ubah</button>
+                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-info text-white btn-ubah">Ubah</button>
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-danger text-white btn-hapus">Hapus</button>
             </div>
         </div>
@@ -44,6 +44,11 @@
               <input type="text" class="form-control" id="nama_user" name="nama_user" placeholder="Nama Pengguna">
               <input type="hidden" id="tipe" name="tipe" value="add">
             </div>
+            <div class="form-group">
+              <label for="adm">Tingkat ADM</label>
+              <select class="form-control" name="adm" id="adm"></select>
+            </div>
+            <hr>
             <div class="form-group field_password">
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" name="password">
@@ -51,10 +56,6 @@
             <div class="form-group field_password">
               <label for="password2">Ulangi Password</label>
               <input type="password" class="form-control" id="password2" name="password2">
-            </div>
-            <div class="form-group">
-              <label for="adm">Tingkat ADM</label>
-              <select class="form-control" name="adm" id="adm"></select>
             </div>
           </form>
         </div>
@@ -97,7 +98,7 @@
       method: 'get',
       success: function(data){
         var obj = JSON.parse(data);
-        var html = '';
+        var html = `<option value="" selected disabled>Pilih salah satu</option>`;
         $.each(obj.data, function(i, val){
           html = html + `
             <option value="`+val.id_tingkat_adm+`">`+val.nama_tingkat_adm+`</option>
@@ -134,14 +135,16 @@
         "autoWidth": false,
         "responsive": true,
         createdRow: function( row, data, dataIndex ) {
-            $(row).attr('data-id', data.id_user);
+            $(row).attr('data-id', data.id_user+'-'+data.id_tingkat_adm);
         },
       });
   }
 
   $('.btn-simpan').click(function(){
     if ($('#tipe').val() != 'add') {
-      var id_pengguna = $('#example2 tbody tr.selected').data('id');
+      var id = $('#example2 tbody tr.selected').data('id');
+      var id = id.split('-');
+      var id_pengguna = id[0];
     }else{
       var id_pengguna = null;
     }
@@ -159,10 +162,10 @@
       success: function(data){
         var obj = JSON.parse(data);
         if (obj.success) {
-          swal('Berhasil', {icon: 'success'});
+          swal(obj.msg, {icon: 'success'});
           table.ajax.reload();
         }else{
-          swal('Gagal', {icon: 'warning'});
+          swal(obj.msg, {icon: 'warning'});
         }
         $('#modal-tambah').modal('hide');
       }
@@ -170,10 +173,10 @@
   })
 
   $('.btn-tambah').click(function(){
-    $('#judul_modal_tambah').html('Tambah Status')
+    $('#judul_modal_tambah').html('Tambah Pengguna')
     $('#tipe').val('add')
     $('#nama_user').val('')
-    $('.field_password').show()
+    $('.field_password input').attr('placeholder', '')
     $('#password').val('')
     $('#password2').val('')
     $('#adm').val('')
@@ -183,14 +186,16 @@
   $('.btn-ubah').click(function(){
     var id = $('#example2 tbody tr.selected').length
     var nama = $('#example2 tbody tr.selected td:nth-child(3)').text();
+    var kode = $('#example2 tbody tr.selected').data('id');
+    var kode = kode.split('-');
     if (id > 0) {
-      $('#judul_modal_tambah').html('Ubah Status')
+      $('#judul_modal_tambah').html('Ubah Pengguna')
       $('#tipe').val('edit')
       $('#nama_user').val(nama)
-      $('.field_password').hide()
+      $('.field_password input').attr('placeholder', 'Optional')
       $('#password').val('')
       $('#password2').val('')
-      $('#adm').val(1) //masinh statis
+      $('#adm').val(kode[1])
       $('#modal-tambah').modal('show')
     }else{
       swal('Tidak ada data yang terpilih', {icon: 'warning'});
@@ -208,19 +213,20 @@
 
   $('.btn-proses-hapus').click(function(){
     var id_user = $('#example2 tbody tr.selected').data('id');
+    var id_user = id_user.split('-');
     $.ajax({
       url: '/master_pengguna/hapus',
       data: {
-        id: id_user,
+        id: id_user[0],
       },
       method: 'post',
       success: function(data){
         var obj = JSON.parse(data);
         if (obj.success) {
-          swal('Berhasil', {icon: 'success'});
+          swal(obj.msg, {icon: 'success'});
           table.ajax.reload();
         }else{
-          swal('Gagal', {icon: 'warning'});
+          swal(obj.msg, {icon: 'warning'});
         }
         $('#modal-hapus').modal('hide');
       }

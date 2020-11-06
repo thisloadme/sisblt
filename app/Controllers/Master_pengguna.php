@@ -37,7 +37,7 @@ class Master_pengguna extends BaseController
         $password2 = $_POST['password2'];
         $adm = $_POST['adm'];
         $id = $_POST['id'];
-        if ($password != $password2) {
+        if (($password != $password2) or ($password == '' and $password2 == '')) {
             $arr = array(
                 'success' => false,
                 'msg' => 'Password tidak sama'
@@ -64,6 +64,9 @@ class Master_pengguna extends BaseController
                     );
                 }
             }else {
+                if ($password == '' OR $password == NULL) {
+                    unset($data['pass_user']);
+                }
                 $where = array(
                     'id_user' => $id
                 );
