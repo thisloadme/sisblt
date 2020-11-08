@@ -4,8 +4,8 @@
         <h1 class="h2">Plafon Anggaran</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
            <div class="btn-group mr-2">
-                <!-- <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-warning text-white btn-edit">Edit Plafon</button> -->
-                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-primary text-white btn-simpan" disabled>Simpan</button>
+                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-warning text-white btn-edit">Edit Plafon</button>
+                <button type="button" style="margin: 0px 1px 0px 1px; display: none;" class="btn btn-sm btn-primary text-white btn-simpan">Simpan</button>
             </div>
         </div>
     </div>
@@ -20,104 +20,10 @@
             </tr>
           </thead>
         <tbody>
-            <tr>
-              <td>Desa Kutabanjarnegara</td>
-              <td class="edit-mode-off" style="text-align: right;">12000000</td>
-            </tr>
-            <tr>
-              <td>RW 1</td>
-              <td class="edit-mode-off" hidden="" style="text-align: right;">3000000</td>
-              <td class="edit-mode-on"><input type="number" name="plafon" class="form-control" style="text-align: right;" value="3000000"></td>
-            </tr>
-            <tr>
-              <td>RW 2</td>
-              <td class="edit-mode-off" hidden="" style="text-align: right;">4500000</td>
-              <td class="edit-mode-on"><input type="number" name="plafon" class="form-control" style="text-align: right;" value="4500000"></td>
-            </tr>
-            <tr>
-              <td>RW 3</td>
-              <td class="edit-mode-off" hidden="" style="text-align: right;">2500000</td>
-              <td class="edit-mode-on"><input type="number" name="plafon" class="form-control" style="text-align: right;" value="2500000"></td>
-            </tr>
-            <tr>
-              <td>RW 4</td>
-              <td class="edit-mode-off" hidden="" style="text-align: right;">2000000</td>
-              <td class="edit-mode-on"><input type="number" name="plafon" class="form-control" style="text-align: right;" value="2000000"></td>
-            </tr>
+          
         </tbody>
         </table>
       </div>
-  </div>
-  <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="judul_modal_tambah">Tambah Penduduk</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="form-tambah">
-            <div class="form-group">
-              <label for="password">Nama Penduduk</label>
-              <div class="input-group">
-                <input type="hidden" name="id_penduduk" id="id_penduduk">
-                <input type="text" name="nama_penduduk" id="nama_penduduk" class="form-control" readonly="" value="Dion Budi Riyanto">
-                <span class="input-group-append">
-                  <button type="button" class="btn btn-primary btn-flat btn-cari">Cari...</button>
-                </span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="No_KTP">No KTP</label>
-              <input type="text" class="form-control" id="No_KTP" readonly="" value="3304062909000001">
-            </div>
-            <div class="form-group">
-              <label for="No_KK">No KK</label>
-              <input type="text" class="form-control" id="No_KK" readonly="" value="330406211211000001">
-            </div>
-            <div class="form-group">
-              <label for="alamat">Alamat</label>
-              <input type="text" class="form-control" id="alamat" readonly="" value="RT 3 RW 1">
-            </div>
-            <div class="form-group">
-              <label for="pekerjaan">Pekerjaan</label>
-              <input type="text" class="form-control" id="pekerjaan" readonly="" value="Karyawan">
-            </div>
-            <div class="form-group">
-              <label for="bantuan">Besaran Bantuan</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Rp</span>
-                </div>
-                <input type="number" class="form-control" name="bantuan" id="bantuan">
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-          <button type="button" class="btn btn-primary btn-simpan">Simpan</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" style="text-align: center;">Yakin ingin hapus data ini?</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-danger btn-proses-hapus">Hapus</button>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="modal fade" id="modal-setuju" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
@@ -180,48 +86,30 @@
 
   $(document).ready(function(){
     get_data();
-
-    $('#tablependuduk').DataTable({
-      "ajax": '/master_penduduk/get_data',
-      "columns": [
-        { 'data': 'no' },
-        { 'data': 'no_ktp' },
-        { 'data': 'nama_penduduk' },
-        { 'data': 'ttl' },
-        { 'data': 'jenis_kelamin' },
-        { 'data': 'alamat' },
-        { 'data': 'agama' },
-        { 'data': 'status_kawin' },
-        { 'data': 'pekerjaan' },
-        { 'data': 'kewarganegaraan' },
-        { 'data': 'no_kk' },
-      ],
-      "paging": true,
-      "lengthChange": false,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      createdRow: function( row, data, dataIndex ) {
-          $(row).attr('data-id', data.id_penduduk);
-      },
-    });
   })
 
-  function get_adm() {
+  function get_data() {
+    var html = '';
     $.ajax({
-      url: '/master_tingkat_adm/get_data',
-      method: 'get',
+      url: '/plafon/get_data',
       success: function(data){
         var obj = JSON.parse(data);
-        var html = '';
-        $.each(obj.data, function(i, val){
-          html = html + `
-            <option value="`+val.id_tingkat_adm+`">`+val.nama_tingkat_adm+`</option>
-          `;
+        $.each(obj, function(i, val){
+          html += `
+            <tr data-id="`+val.id_tingkat_adm+`">
+              <td>`+val.nama_tingkat_adm+`</td>`
+          
+          if (val.rt == null && val.rw == null) {
+            html += `<td style="text-align: right;">`+val.plafon+`</td>`
+          }else{
+            html += `<td class="edit-mode-off" style="text-align: right;">`+val.plafon+`</td>`
+            html += `<td class="edit-mode-on" style="display: none; padding: 5px;"><input type="number" name="plafon" class="form-control" style="text-align: right;height: 32px!important;" value="`+val.plafon+`"></td>`
+          }
+          
+          html += `</tr>`
         })
-        $('#adm').html(html)
+
+        $('#table-plafon tbody').html(html)
       }
     })
   }
@@ -235,127 +123,44 @@
     }
   })
 
-  function get_data() {
-    table = $('#example2').DataTable({
-        "ajax": '/transaksi/get_data',
-        "columns": [
-          { 'data': 'no' },
-          { 'data': 'tanggal_pengajuan' },
-          { 'data': 'no_kk' },
-          { 'data': 'no_ktp' },
-          { 'data': 'nama_penduduk' },
-          { 'data': 'nama_kepala_keluarga' },
-          { 'data': 'alamat' },
-          { 'data': 'pekerjaan' },
-          { 'data': 'bantu' },
-          { 'data': 'nama_status' },
-        ],
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        createdRow: function( row, data, dataIndex ) {
-            $(row).attr('data-id', data.id_pengajuan);
-        },
-      });
-  }
+  $('.btn-edit').click(function(){
+    $('.btn-edit').hide();
+    $('.btn-simpan').show();
+    $('.edit-mode-on').show()
+    $('.edit-mode-off').hide()
+  })
 
   $('.btn-simpan').click(function(){
-    if ($('#tipe').val() != 'add') {
-      var id_pengguna = $('#example2 tbody tr.selected').data('id');
-    }else{
-      var id_pengguna = null;
+    var array = [];
+    var no = 2;
+    var max = $('#table-plafon tbody tr').length;
+    for (var i = no; i <= max; i++) {
+      var td = $('#table-plafon tbody tr:nth-child('+i+')');
+      var id = td.data('id')
+      var plafon = td.find('.edit-mode-on').find('input').val();
+      array.push({
+        id: id,
+        plafon: plafon
+      })
     }
-    
-    let myForm = $('#form-tambah')[0];
-    let formData = new FormData(myForm);
-    formData.append('id', id_pengguna);
-    
+
     $.ajax({
-      url: '/master_pengguna/simpan',
-      data: formData,
-      processData: false,
-      contentType: false,
+      url: '/plafon/simpan',
+      data: {data: array},
       method: 'post',
       success: function(data){
         var obj = JSON.parse(data);
         if (obj.success) {
-          swal('Berhasil', {icon: 'success'});
-          table.ajax.reload();
+          swal(obj.msg, {icon: 'success'});
+          $('.btn-edit').show();
+          $('.btn-simpan').hide();
+          $('.edit-mode-on').hide()
+          $('.edit-mode-off').show()
+          get_data();
         }else{
-          swal('Gagal', {icon: 'warning'});
+          swal(obj.msg, {icon: 'warning'});
         }
-        $('#modal-tambah').modal('hide');
       }
     })
-  })
-
-  $('.btn-tambah').click(function(){
-    $('#judul_modal_tambah').html('Tambah Pengajuan')
-    $('#tipe').val('add')
-    $('#nama_user').val('')
-    $('.field_password').show()
-    $('#password').val('')
-    $('#password2').val('')
-    $('#adm').val('')
-    $('#modal-tambah').modal('show')
-  })
-
-  $('.btn-ubah').click(function(){
-    var id = $('#example2 tbody tr.selected').length
-    var nama = $('#example2 tbody tr.selected td:nth-child(3)').text();
-    if (id > 0) {
-      $('#judul_modal_tambah').html('Ubah Pengajuan')
-      $('#tipe').val('edit')
-      $('#nama_user').val(nama)
-      $('.field_password').hide()
-      $('#password').val('')
-      $('#password2').val('')
-      $('#adm').val(1) //masinh statis
-      $('#modal-tambah').modal('show')
-    }else{
-      swal('Tidak ada data yang terpilih', {icon: 'warning'});
-    }
-  })
-
-  $('.btn-hapus').click(function(){
-    var id = $('#example2 tbody tr.selected').length
-    if (id > 0) {
-      $('#modal-hapus').modal('show')
-    }else{
-      swal('Tidak ada data yang terpilih', {icon: 'warning'});
-    }
-  })
-
-  $('.btn-proses-hapus').click(function(){
-    var id_user = $('#example2 tbody tr.selected').data('id');
-    $.ajax({
-      url: '/master_pengguna/hapus',
-      data: {
-        id: id_user,
-      },
-      method: 'post',
-      success: function(data){
-        var obj = JSON.parse(data);
-        if (obj.success) {
-          swal('Berhasil', {icon: 'success'});
-          table.ajax.reload();
-        }else{
-          swal('Gagal', {icon: 'warning'});
-        }
-        $('#modal-hapus').modal('hide');
-      }
-    })
-  })
-
-  $('.btn-cari').click(function(){
-    $('#modal-cari-penduduk').modal('show')
-  })
-
-  $('.btn-teruskan').click(function(){
-    $('#modal-setuju').modal('show')
   })
 </script>

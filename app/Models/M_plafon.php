@@ -15,27 +15,54 @@ class M_plafon extends Model
      
     public function get_plafon()
     {
-        $q = $this->db->table('m_user')->join('m_tingkat_adm', 'm_tingkat_adm.id_tingkat_adm = m_user.id_tingkat_adm')
-        ->orderBy('m_user.id_tingkat_adm', 'DESC')
+        $q = $this->db->table('m_tingkat_adm')
+        ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', '"Kepala Desa / Lurah" nama_tingkat_adm', 'plafon'])
+        ->where('rt', NULL)
+        ->where('rw', NULL)
         ->get()->getResult();
-        foreach ($q as $k => $a) {
-        	$q[$k]->no = $k+1;
+
+        $w = $this->db->table('m_tingkat_adm')
+        ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw) nama_tingkat_adm', 'plafon'])
+        ->where('rt', NULL)
+        ->where('rw is not', NULL)
+        ->get()->getResult();
+
+        $e = $this->db->table('m_tingkat_adm')
+        ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw, " RT ", rt) nama_tingkat_adm', 'plafon'])
+        ->where('rt is not', NULL)
+        ->where('rw is not', NULL)
+        ->get()->getResult();
+
+        $arr = array_merge($q,$w,$e);
+
+        $total = $this->db->table('m_tingkat_adm')
+        ->selectSum('plafon')
+        ->where('rt is not', NULL)
+        ->orWhere('rw is not', NULL)
+        ->get()->getResult();
+        
+        foreach ($arr as $k => $a) {
+            if ($a->rt == NULL and $a->rw == NULL) {
+                $arr[$k]->plafon = $total[0]->plafon;
+            }
+            $arr[$k]->no = $k+1;
+            $arr[$k]->plafon = is_null($a->plafon) ? '0' : $a->plafon;
         }
-        return $q;
+        return $arr;
     }
 
     public function tambah_data($data)
     {
-    	return $this->db->table('m_user')->insert($data);
+    	return $this->db->table('m_tingkat_adm')->insert($data);
     }
 
     public function ubah_data($data, $where)
     {
-    	return $this->db->table('m_user')->update($data, $where);
+    	return $this->db->table('m_tingkat_adm')->update($data, $where);
     }
 
     public function hapus_data($data)
     {
-    	return $this->db->table('m_user')->delete($data);
+    	return $this->db->table('m_tingkat_adm')->delete($data);
     }
 }

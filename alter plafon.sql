@@ -1,0 +1,1 @@
+ALTER TABLE `m_tingkat_adm` ADD `plafon` FLOAT NULL DEFAULT NULL AFTER `tahun`;

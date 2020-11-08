@@ -5,7 +5,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-primary text-white btn-tambah">Tambah</button>
-                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-warning text-white btn-ubah">Ubah</button>
+                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-info text-white btn-ubah">Ubah</button>
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-danger text-white btn-hapus">Hapus</button>
             </div>
         </div>
@@ -46,21 +46,71 @@
         <div class="modal-body">
           <form id="form-tambah">
             <div class="form-group">
-              <label for="nama_user">Nama Pengguna</label>
-              <input type="text" class="form-control" id="nama_user" name="nama_user" placeholder="Nama Pengguna">
+              <label for="nama_kepala_keluarga">Nama Kepala Keluarga</label>
+              <input type="text" class="form-control" id="nama_kepala_keluarga" name="nama_kepala_keluarga">
               <input type="hidden" id="tipe" name="tipe" value="add">
             </div>
-            <div class="form-group field_password">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <div class="form-group field_password">
-              <label for="password2">Ulangi Password</label>
-              <input type="password" class="form-control" id="password2" name="password2">
-            </div>
             <div class="form-group">
-              <label for="adm">Tingkat ADM</label>
-              <select class="form-control" name="adm" id="adm"></select>
+              <label for="no_kk">No Kartu Keluarga</label>
+              <input type="number" class="form-control" id="no_kk" name="no_kk">
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label for="rt">RT</label>
+                <input type="number" class="form-control" id="rt" name="rt">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="rw">RW</label>
+                <input type="number" class="form-control" id="rw" name="rw">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="kode_pos">Kode Pos</label>
+                <input type="number" class="form-control" id="kode_pos" name="kode_pos">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="provinsi">Provinsi</label>
+              <select name="provinsi" id="provinsi" class="form-control">
+                <option value="" selected disabled>Pilih salah satu</option>
+                <option value="Jawa Tengah">Jawa Tengah</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="kabupaten">Kabupaten</label>
+              <select name="kabupaten" id="kabupaten" class="form-control">
+                <option value="" selected disabled>Pilih salah satu</option>
+                <option value="Banjarnegara">Banjarnegara</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="kecamatan">Kecamatan</label>
+              <select name="kecamatan" id="kecamatan" class="form-control">
+                <option value="" selected disabled>Pilih salah satu</option>
+                <option value="Banjarnegara">Banjarnegara</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="desa">Desa</label>
+              <select name="desa" id="desa" class="form-control">
+                <option value="" selected disabled>Pilih salah satu</option>
+                <option value="Ampelsari">Ampelsari</option>
+                <option value="Cendana">Cendana</option>
+                <option value="Sokayasa">Sokayasa</option>
+                <option value="Tlagawera">Tlagawera</option>
+                <option value="Argasoka">Argasoka</option>
+                <option value="Karangtengah">Karangtengah</option>
+                <option value="Krandegan">Krandegan</option>
+                <option value="Kutabanjarnegara">Kutabanjarnegara</option>
+                <option value="Parakancanggah">Parakancanggah</option>
+                <option value="Semampir">Semampir</option>
+                <option value="Semarang">Semarang</option>
+                <option value="Sokanandi">Sokanandi</option>
+                <option value="Wangon">Wangon</option>
+              </select>
             </div>
           </form>
         </div>
@@ -75,7 +125,7 @@
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" style="text-align: center;">Yakin ingin hapus Status ini?</h4>
+          <h4 class="modal-title" style="text-align: center;">Yakin ingin hapus data ini?</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -152,14 +202,14 @@
 
   $('.btn-simpan').click(function(){
     if ($('#tipe').val() != 'add') {
-      var id_pengguna = $('#example2 tbody tr.selected').data('id');
+      var id_kk = $('#example2 tbody tr.selected').data('id');
     }else{
-      var id_pengguna = null;
+      var id_kk = null;
     }
     
     let myForm = $('#form-tambah')[0];
     let formData = new FormData(myForm);
-    formData.append('id', id_pengguna);
+    formData.append('id', id_kk);
     
     $.ajax({
       url: '/master_kk/simpan',
@@ -181,27 +231,32 @@
   })
 
   $('.btn-tambah').click(function(){
-    $('#judul_modal_tambah').html('Tambah Status')
-    $('#tipe').val('add')
-    $('#nama_user').val('')
-    $('.field_password').show()
-    $('#password').val('')
-    $('#password2').val('')
-    $('#adm').val('')
+    $('#judul_modal_tambah').html('Tambah Data Kartu Keluarga')
+    $('#form-tambah').find('input').val('')
+    $('#form-tambah').find('select').val('')
+    $('#tipe').val('add')    
     $('#modal-tambah').modal('show')
   })
 
   $('.btn-ubah').click(function(){
     var id = $('#example2 tbody tr.selected').length
-    var nama = $('#example2 tbody tr.selected td:nth-child(3)').text();
+    var row = $.map(table.rows('.selected').data(), function (item) {
+        return item
+    }); 
+    row = row[0]
+
     if (id > 0) {
-      $('#judul_modal_tambah').html('Ubah Status')
+      $('#judul_modal_tambah').html('Ubah Data Kartu Keluarga')
       $('#tipe').val('edit')
-      $('#nama_user').val(nama)
-      $('.field_password').hide()
-      $('#password').val('')
-      $('#password2').val('')
-      $('#adm').val(1) //masinh statis
+      $('#nama_kepala_keluarga').val(row.nama_kepala_keluarga)
+      $('#rt').val(row.rt)
+      $('#rw').val(row.rw)
+      $('#no_kk').val(row.no_kk)
+      $('#kode_pos').val(row.kode_pos)
+      $('#desa').val(row.desa)
+      $('#kecamatan').val(row.kecamatan)
+      $('#kabupaten').val(row.kabupaten)
+      $('#provinsi').val(row.provinsi)
       $('#modal-tambah').modal('show')
     }else{
       swal('Tidak ada data yang terpilih', {icon: 'warning'});
@@ -218,11 +273,11 @@
   })
 
   $('.btn-proses-hapus').click(function(){
-    var id_user = $('#example2 tbody tr.selected').data('id');
+    var id_kk = $('#example2 tbody tr.selected').data('id');
     $.ajax({
       url: '/master_kk/hapus',
       data: {
-        id: id_user,
+        id: id_kk,
       },
       method: 'post',
       success: function(data){
