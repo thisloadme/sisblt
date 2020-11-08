@@ -57,4 +57,19 @@ class T_pengajuan extends Model
         ->get()->getResult();
         return $q;
     }
+
+    public function tambah_data($data)
+    {
+    	return $this->db->table('t_pengajuan')->insert($data);
+    }
+
+    public function ubah_data($data, $where)
+    {
+    	return $this->db->table('t_pengajuan')->update($data, $where);
+    }
+
+    public function hapus_data($data)
+    {
+    	return $this->db->table('t_pengajuan')->delete($data);
+    }
 }

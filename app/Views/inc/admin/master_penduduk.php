@@ -233,7 +233,7 @@
     $.map(formData, function(n, i){
         data[n['name']] = n['value'];
     });
-    console.log(data);
+    
     $.ajax({
       url: '/master_penduduk/simpan',
       data: data,

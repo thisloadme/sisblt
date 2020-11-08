@@ -63,6 +63,7 @@
             <div class="form-group">
               <label for="No_KTP">No KTP</label>
               <input type="text" class="form-control" id="No_KTP" readonly="" value="">
+              <input type="hidden" id="tipe" value="add">
             </div>
             <div class="form-group">
               <label for="No_KK">No KK</label>
@@ -111,13 +112,10 @@
               <input type="text" class="form-control" id="pekerjaan" readonly="" value="">
             </div>
             <div class="form-group">
-              <label for="bantuan">Besaran Bantuan</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Rp</span>
-                </div>
-                <input type="number" class="form-control" name="bantuan" id="bantuan">
-              </div>
+              <label for="jenis_bantuan">Jenis Bantuan</label>
+              <select name="jenis_bantuan" id="jenis_bantuan" class="form-control">
+                
+              </select>
             </div>
           </form>
         </div>
@@ -214,12 +212,17 @@
         { 'data': 'nama_penduduk' },
         { 'data': 'ttl' },
         { 'data': 'jenis_kelamin' },
-        { 'data': 'alamat' },
+        { 
+          'data': 'kec',
+          render: function ( data, type, row ) {
+              return row.kec + ', ' + row.kel + ' RT ' + row.rt + ' RW '+ row.rw + ' ';
+          }
+        },
         { 'data': 'agama' },
         { 'data': 'status_kawin' },
         { 'data': 'pekerjaan' },
         { 'data': 'kewarganegaraan' },
-        { 'data': 'no_kk' },
+        { 'data': 'id_kk' },
       ],
       "paging": true,
       "lengthChange": false,
@@ -301,7 +304,12 @@
           { 'data': 'no_ktp' },
           { 'data': 'nama_penduduk' },
           { 'data': 'nama_kepala_keluarga' },
-          { 'data': 'alamat' },
+          { 
+            'data': 'kec',
+            render: function ( data, type, row ) {
+                return row.kec + ', ' + row.kel + ' RT ' + row.rt + ' RW '+ row.rw + ' ';
+            }
+          },
           { 'data': 'pekerjaan' },
           { 'data': 'bantu' },
           { 'data': 'nama_status' },
@@ -321,20 +329,24 @@
 
   $('.btn-simpan').click(function(){
     if ($('#tipe').val() != 'add') {
-      var id_pengguna = $('#example2 tbody tr.selected').data('id');
+      var id_pengajuan = $('#example2 tbody tr.selected').data('id');
     }else{
-      var id_pengguna = null;
+      var id_pengajuan = null;
     }
     
-    let myForm = $('#form-tambah')[0];
-    let formData = new FormData(myForm);
-    formData.append('id', id_pengguna);
+    var tipe = $('#tipe').val();
+    console.log(tipe);
+    let formData = $("#form-tambah").serializeArray();
+    formData.push({"name":"tipe","value":tipe},{"name":"id","value":id_pengajuan});
+    var data = {};
     
+    $.map(formData, function(n, i){
+        data[n['name']] = n['value'];
+    });
+    console.log(data);
     $.ajax({
-      url: '/master_pengguna/simpan',
-      data: formData,
-      processData: false,
-      contentType: false,
+      url: '/transaksi/simpan',
+      data: data,
       method: 'post',
       success: function(data){
         var obj = JSON.parse(data);
@@ -358,20 +370,60 @@
     $('#password2').val('')
     $('#adm').val('')
     $('#modal-tambah').modal('show')
+      $.ajax({
+          type: "POST",
+          dataType: "html",
+          url: "/master_jenis_bantuan/get_data",
+          success: function(row, data, i){
+            var row = JSON.parse(row);
+            // console.log(row.data[0].id_jenis_bantuan);
+            var i;
+            var tag_sel = '';
+            for (i = 0; i <= row.data.length; i++) {
+              tag_sel +='<option value= '+ row.data[i].id_jenis_bantuan +'>' + row.data[i].nama_jenis_bantuan + '</option>';
+              $("#jenis_bantuan").html(tag_sel);
+            }
+          }
+      });
   })
 
   $('.btn-ubah').click(function(){
     var id = $('#example2 tbody tr.selected').length
-    var nama = $('#example2 tbody tr.selected td:nth-child(3)').text();
+
+    var idx = table.cell('.selected', 0).index();
+    var data = table.row( idx.row ).data();
+
+    var id_penduduk = data.id_penduduk;
+    console.log(data);
     if (id > 0) {
       $('#judul_modal_tambah').html('Ubah Pengajuan')
       $('#tipe').val('edit')
-      $('#nama_user').val(nama)
-      $('.field_password').hide()
-      $('#password').val('')
-      $('#password2').val('')
-      $('#adm').val(1) //masinh statis
+      $('#id_penduduk').val(data.id_penduduk)
+      $('#nama_penduduk').val(data.nama_penduduk)
+      $('#No_KTP').val(data.no_ktp)
+      $('#No_KK').val(data.no_kk)
+      $('#kec').val(data.kec)
+      $('#kel').val(data.kel)
+      $('#rw').val(data.rw)
+      $('#rt').val(data.rt)
+      $('#pekerjaan').val(data.pekerjaan)
+      $('#jenis_bantuan').val(data.id_jenis_bantuan)
       $('#modal-tambah').modal('show')
+      $.ajax({
+          type: "POST",
+          dataType: "html",
+          url: "/master_jenis_bantuan/get_data",
+          success: function(row, data, i){
+            var row = JSON.parse(row);
+            // console.log(row.data[0].id_jenis_bantuan);
+            var i;
+            var tag_sel = '';
+            for (i = 0; i <= row.data.length; i++) {
+              tag_sel +='<option value= '+ row.data[i].id_jenis_bantuan +'>' + row.data[i].nama_jenis_bantuan + '</option>';
+              $("#jenis_bantuan").html(tag_sel);
+            }
+          }
+      });
     }else{
       swal('Tidak ada data yang terpilih', {icon: 'warning'});
     }
@@ -387,11 +439,14 @@
   })
 
   $('.btn-proses-hapus').click(function(){
-    var id_user = $('#example2 tbody tr.selected').data('id');
+    var idx = table.cell('.selected', 0).index();
+    var data = table.row( idx.row ).data();
+    var id_pengajuan = data.id_pengajuan;
+    
     $.ajax({
-      url: '/master_pengguna/hapus',
+      url: '/transaksi/hapus',
       data: {
-        id: id_user,
+        id: id_pengajuan,
       },
       method: 'post',
       success: function(data){
@@ -414,4 +469,5 @@
   $('.btn-teruskan').click(function(){
     $('#modal-setuju').modal('show')
   })
+
 </script>
