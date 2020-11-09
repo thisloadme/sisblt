@@ -7,7 +7,7 @@
 	<script src="/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 	<script type="text/javascript">
 	  $(function () {
-	    $('#dashboard-table').DataTable({
+	    $('.dashboard-table').DataTable({
 	      "paging": true,
 	      "lengthChange": false,
 	      "searching": false,
