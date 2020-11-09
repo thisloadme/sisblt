@@ -210,6 +210,7 @@ foreach ($setuju as $val): ?>
   }
 
   $(document).ready(function(){
+    <?php if ($totalplafon != NULL or $totalplafon != 0): ?>
     var chartrealisasi = document.getElementById('chartrealisasi');
     var myPieChart2 = new Chart(chartrealisasi, {
         type: 'pie',
@@ -260,6 +261,7 @@ foreach ($setuju as $val): ?>
             }
         }
     }
+    <?php endif ?>
 
     var chartpenerima = document.getElementById('chartpenerima');
     var myPieChart3 = new Chart(chartpenerima, {
