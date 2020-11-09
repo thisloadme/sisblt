@@ -39,6 +39,17 @@ class Transaksi extends BaseController
         echo json_encode($arr);
     }
 
+    function get_data_bynik()
+    {
+        $nik = $_POST['nik'];
+        $model = new T_pengajuan();
+        $res  = $model->get_pengajuan_bynik($nik);
+        $arr = array(
+            'data' => $res
+        );
+        echo json_encode($arr);
+    }
+
     function simpan()
     {
         $tipe = $_POST['tipe'];

@@ -58,6 +58,24 @@ class T_pengajuan extends Model
         return $q;
     }
 
+    public function get_pengajuan_bynik($nik)
+    {
+        $q = $this->db->table('t_pengajuan')
+        ->join('m_user', 'm_user.id_user = t_pengajuan.id_user_pengajuan', 'left')
+        ->join('m_penduduk', 'm_penduduk.id_penduduk = t_pengajuan.id_penduduk', 'left')
+        ->join('m_kk', 'm_kk.id_kk = m_penduduk.id_kk', 'left')
+        ->join('m_jenis_bantuan', 'm_jenis_bantuan.id_jenis_bantuan = t_pengajuan.id_jenis_bantuan', 'left')
+        ->join('m_status', 'm_status.id_status = t_pengajuan.id_status', 'left')
+        ->where('m_penduduk.no_ktp',$nik)
+        ->orderBy('t_pengajuan.id_status', 'desc')
+        ->get()->getResult();
+        foreach ($q as $k => $a) {
+            $q[$k]->no = $k+1;
+            $q[$k]->bantu = $a->nama_jenis_bantuan.'('.$a->nominal.' '.$a->satuan.')';
+        }
+        return $q;
+    }
+
     public function tambah_data($data)
     {
     	return $this->db->table('t_pengajuan')->insert($data);
