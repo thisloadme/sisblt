@@ -58,6 +58,13 @@
                             <hr class="bg-light">
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" href="/laporan">
+                                <span data-feather="file"></span>
+                                Laporan
+                            </a>
+                            <hr class="bg-light">
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" href="#">
                                 <span data-feather="file"></span>
                                 Data Master

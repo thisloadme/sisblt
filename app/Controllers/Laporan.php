@@ -1,0 +1,71 @@
+<?php 
+namespace App\Controllers;
+use App\Models\M_laporan;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+class Laporan extends BaseController
+{
+	public function index()
+	{
+        $data = array(
+            'header' => 'main-inc/admin/header',
+            'konten' => 'inc/admin/laporan',
+            'footer' => 'main-inc/admin/footer',
+        );
+        echo view('template',$data);
+	}
+
+    public function cetak_daftar_penerima()
+    {
+        $model = new M_laporan();
+
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $data = $model->get_daftar_penerima_blt();
+        $excel = IOFactory::load('././template/penerima-berdasarkan-kk.xlsx');
+        
+        $numrow = 8;
+        foreach($data as $key => $val) {
+            $excel->setActiveSheetIndex(0)
+                        ->setCellValue('A' . $numrow, ($key+1))
+                        ->setCellValue('B' . $numrow, $val->no_kk)
+                        ->setCellValue('C' . $numrow, $val->nama_kepala_keluarga)
+                        ->setCellValue('D' . $numrow, number_format($val->nominal, null, '', '.'))
+                        ->setCellValue('E' . $numrow, date('d F Y', strtotime($val->tanggal_pengajuan)));
+
+            $excel->setActiveSheetIndex(0)->getStyle('D'.$numrow)->getNumberFormat()
+    ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $excel->setActiveSheetIndex(0)->getStyle('A'.$numrow.':G'.$numrow)->applyFromArray($styleArray);
+            $numrow++;
+        }
+        $writer = new Xlsx($excel);
+        $fileName = 'Daftar Penerima Bantuan Langsung Tunai';
+
+        // Redirect hasil generate xlsx ke web client
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
+
+    public function cetak_calon_penerima()
+    {
+        
+    }
+
+    public function cetak_penduduk()
+    {
+        
+    }
+}
+
