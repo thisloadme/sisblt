@@ -36,7 +36,7 @@
       </div>
   </div>
 
-  <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" style="overflow: auto;" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -416,6 +416,10 @@
     console.log(data);
     if (id > 0) {
       $('#no_kk').val(data.no_kk)
+      $('#kec').val(data.kecamatan)
+      $('#kel').val(data.desa)
+      $('#rw').val(data.rw)
+      $('#rt').val(data.rt)
       $('#modal-cari-kk').modal('hide')
     }else{
       swal('Tidak ada data yang terpilih', {icon: 'warning'});
