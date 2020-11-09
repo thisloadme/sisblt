@@ -48,12 +48,18 @@
             url: "/transaksi/get_data_bynik",
             success: function(row, data, i){
                 var row = JSON.parse(row);
-                console.log(row);
+                
                 var i;
                 var tag_sel = '';
-                for (i = 0; i <= row.data.length; i++) {
-                    $('#nama_penerima').text('Atas Nama '+row.data[i].nama_penduduk);
-                    $('#status').text('Status '+row.data[i].nama_status);
+
+                if(row.data.length > 0){
+                    for (i = 0; i < row.data.length; i++) {
+                        $('#nama_penerima').text('Atas Nama '+row.data[i].nama_penduduk);
+                        $('#status').text('Status '+row.data[i].nama_status);
+                    }
+                }else{
+                    $('#nama_penerima').text('Anda Belum Terdaftar Sebagai Penerima');
+                    $('#status').text('Silahkan Konfirmasi RT Setempat');
                 }
             }
       });
