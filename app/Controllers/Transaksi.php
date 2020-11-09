@@ -52,9 +52,11 @@ class Transaksi extends BaseController
 
     function simpan()
     {
+        $session = \Config\Services::session();
+        
         $tipe = $_POST['tipe'];
         $data = array(
-            'id_user_pengajuan' => 1,
+            'id_user_pengajuan' => $session->get('id_user'),
             'id_penduduk' => $_POST['id_penduduk'],
             'id_jenis_bantuan' => $_POST['jenis_bantuan'],
             'id_status' => 1,
@@ -105,6 +107,40 @@ class Transaksi extends BaseController
             'id_pengajuan' => $id
         );
         $res  = $model->hapus_data($data);
+        if ($res) {
+            $arr = array(
+                'success' => true,
+                'msg' => 'berhasil'
+            );
+        }else {
+            $arr = array(
+                'success' => false,
+                'msg' => 'gagal'
+            );
+        }
+        echo json_encode($arr);
+    }
+
+    function teruskan()
+    {
+        $session = \Config\Services::session();
+
+        $status = '';
+        if($session->get('nama_user') == 'rw'){
+            $status = 2;
+        }else{
+            $status = 3;
+        }
+
+        $model = new T_pengajuan();
+        $data = array(
+            'id_status' => $status,
+        );
+        $where = array(
+            'id_pengajuan' => $_POST['id']
+        );
+
+        $res  = $model->teruskan($data, $where);
         if ($res) {
             $arr = array(
                 'success' => true,

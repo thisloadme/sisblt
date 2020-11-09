@@ -39,8 +39,8 @@ class Login extends BaseController
 			$session = \Config\Services::session();
 			$sess_data = $cek_login['data'][0];
 			$session->set($sess_data);
-
-			return redirect()->to('/transaksi');
+			
+			echo json_encode($cek_login);
     	}else {
     		echo json_encode($cek_login);
     		exit();
