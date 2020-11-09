@@ -25,6 +25,7 @@ foreach ($setuju as $val): ?>
                 </ul>
               </div>
             </div>
+            <?php if ($totalplafon != NULL or $totalplafon != 0): ?>
             <h5>Realisasi Penyaluran Dana</h5>
             <div class="row" style="height: 230px!important">
               <div class="col-sm-3"></div>
@@ -40,6 +41,7 @@ foreach ($setuju as $val): ?>
                 </ul>
               </div>
             </div>
+            <?php endif ?>
           </div>
           <div class="col-sm-9 iftable" id="tabel-semua-penerima" style="display: none">
             <h5>Data Semua Pengajuan Bantuan</h5>
