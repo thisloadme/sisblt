@@ -90,4 +90,10 @@ class T_pengajuan extends Model
     {
     	return $this->db->table('t_pengajuan')->delete($data);
     }
+
+    public function teruskan($data, $where)
+    {
+    	return $this->db->table('t_pengajuan')->update($data, $where);
+    }
+
 }

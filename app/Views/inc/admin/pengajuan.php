@@ -146,7 +146,7 @@
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" style="text-align: center;">Yakin ingin meneruskan data ke RW ?</h4>
+          <h4 class="modal-title" style="text-align: center;">Yakin ingin meneruskan data ?</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -335,7 +335,6 @@
     }
     
     var tipe = $('#tipe').val();
-    console.log(tipe);
     let formData = $("#form-tambah").serializeArray();
     formData.push({"name":"tipe","value":tipe},{"name":"id","value":id_pengajuan});
     var data = {};
@@ -343,7 +342,7 @@
     $.map(formData, function(n, i){
         data[n['name']] = n['value'];
     });
-    console.log(data);
+
     $.ajax({
       url: '/transaksi/simpan',
       data: data,
@@ -467,7 +466,36 @@
   })
 
   $('.btn-teruskan').click(function(){
-    $('#modal-setuju').modal('show')
+    var id = $('#example2 tbody tr.selected').length
+    if(id > 0){
+      $('#modal-setuju').modal('show')
+    }else{
+      swal('Tidak ada data yang terpilih', {icon: 'warning'});
+    }
+  })
+
+  $('.btn-proses-teruskan').click(function(){
+    var idx = table.cell('.selected', 0).index();
+    var data = table.row( idx.row ).data();
+    var id_pengajuan = data.id_pengajuan;
+
+    $.ajax({
+      url: '/transaksi/teruskan',
+      method: 'post',
+      data: {
+        id: id_pengajuan,
+      },
+      success: function(data){
+        var obj = JSON.parse(data);
+        if (obj.success) {
+          swal('Berhasil', {icon: 'success'});
+          table.ajax.reload();
+        }else{
+          swal('Gagal', {icon: 'warning'});
+        }
+        $('#modal-setuju').modal('hide');
+      }
+    })
   })
 
 </script>
