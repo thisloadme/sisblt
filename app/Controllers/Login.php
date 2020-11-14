@@ -25,17 +25,17 @@ class Login extends BaseController
 	{
 		$user = $_POST['userlogin'];
 		$pass = $_POST['userpass'];
-
+		
 		if ($user == '' OR $pass == '') {
     		$out = array(
     			'success' => false,
     			'msg' => 'Harap lengkapi username dan passwordnya'
     		);
     		return $out;
-    	}
-
-    	$cek_login = $this->m_pengguna->cek_kesesuaian_login($user, $pass);
-    	if ($cek_login['success']) {
+		}
+		$pengguna = new M_pengguna();
+    	$cek_login = $pengguna->cek_kesesuaian_login($user, $pass);
+		if ($cek_login['success']) {
 			$session = \Config\Services::session();
 			$sess_data = $cek_login['data'][0];
 			$session->set($sess_data);
