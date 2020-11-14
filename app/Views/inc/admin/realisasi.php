@@ -5,12 +5,14 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2" style="">
               <h5> Jumlah Plafon Anggaran : <?php echo 'Rp.'.$totalplafon; ?></h5>    
-              &nbsp        
+              &nbsp;        
               <h5> | Sisa Plafon Anggaran : <?php echo 'Rp.'.$sisa_plafon; ?></h5>            
             </div>
             <div class="btn-group mr-2">
+              <?php $session = \Config\Services::session(); if($session->get('nama_tingkat_adm') != 'RT'): ?>
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-info text-white btn-teruskan">Dicairkan</button>
                 <!-- <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-secondary text-white btn-tolak">Tolak</button> -->
+              <?php endif ?>
             </div>
             &nbsp;
             <div class="btn-group mr-2">
@@ -29,7 +31,6 @@
             <th>No KK</th>
             <th>No KTP</th>
             <th>Nama Lengkap</th>
-            <th>Nama Kepala Keluarga</th>
             <th>Alamat</th>
             <th>Pekerjaan</th>
             <th>Bantuan</th>
@@ -193,14 +194,13 @@
 
   function get_data() {
     table = $('#example2').DataTable({
-        "ajax": '/transaksi/get_data',
+        "ajax": '/realisasi/get_data',
         "columns": [
           { 'data': 'no' },
           { 'data': 'tanggal_pengajuan' },
           { 'data': 'no_kk' },
           { 'data': 'no_ktp' },
           { 'data': 'nama_penduduk' },
-          { 'data': 'nama_kepala_keluarga' },
           { 
             'data': 'kec',
             render: function ( data, type, row ) {

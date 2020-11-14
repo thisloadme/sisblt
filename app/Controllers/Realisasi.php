@@ -21,9 +21,9 @@ class Realisasi extends BaseController
 	{
         $model = new T_pengajuan();
         $model2 = new M_dashboard();
-        $pengajuan  = $model->get_pengajuan($this->sess->get());
-        $totalplafon = $model2->get_total_plafon();
-        $realisasi  = $model2->get_totalsisa_plafon();
+        $pengajuan  = $model->get_pengajuan_real($this->sess->get());
+        $totalplafon = $model2->get_total_plafon($this->sess->get());
+        $realisasi  = $model2->get_totalsisa_plafon($this->sess->get());
         $data = array(
             'header' => 'main-inc/admin/header',
             'konten' => 'inc/admin/realisasi',
@@ -38,7 +38,7 @@ class Realisasi extends BaseController
     function get_data()
     {
         $model = new T_pengajuan();
-        $res  = $model->get_pengajuan();
+        $res  = $model->get_pengajuan_real($this->sess->get());
         $arr = array(
             'data' => $res
         );
