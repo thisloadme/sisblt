@@ -32,7 +32,6 @@
             <th>No KK</th>
             <th>No KTP</th>
             <th>Nama Lengkap</th>
-            <th>Nama Kepala Keluarga</th>
             <th>Alamat</th>
             <th>Pekerjaan</th>
             <th>Bantuan</th>
@@ -392,7 +391,6 @@
           { 'data': 'no_kk' },
           { 'data': 'no_ktp' },
           { 'data': 'nama_penduduk' },
-          { 'data': 'nama_kepala_keluarga' },
           { 
             'data': 'kec',
             render: function ( data, type, row ) {

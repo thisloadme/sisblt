@@ -15,11 +15,11 @@ class T_pengajuan extends Model
     public function get_pengajuan($sess)
     {
         if ($sess['nama_tingkat_adm'] == 'Desa') {
-            $status = array(1,2,3,7);
+            $status = array(2,3,7);
         }elseif ($sess['nama_tingkat_adm'] == 'RW') {
             $status = array(1,2);
         }else {
-            $status = array(1);
+            $status = array(8,1);
         }
         $q = $this->db->table('t_pengajuan')
         ->join('m_user', 'm_user.id_user = t_pengajuan.id_user_pengajuan', 'left')
@@ -30,7 +30,7 @@ class T_pengajuan extends Model
         ->whereIn('t_pengajuan.id_status', $status)
         ->orderBy('t_pengajuan.id_status', 'desc')
         ->get()->getResult();
-        
+
         foreach ($q as $k => $a) {
             if ($sess['nama_tingkat_adm'] == 'RW') {
                 if ($a->rw != $sess['rw']) {

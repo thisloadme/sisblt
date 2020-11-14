@@ -21,7 +21,7 @@ class Realisasi extends BaseController
 	{
         $model = new T_pengajuan();
         $model2 = new M_dashboard();
-        $pengajuan  = $model->get_pengajuan();
+        $pengajuan  = $model->get_pengajuan($this->sess->get());
         $totalplafon = $model2->get_total_plafon();
         $realisasi  = $model2->get_totalsisa_plafon();
         $data = array(

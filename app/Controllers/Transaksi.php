@@ -65,7 +65,7 @@ class Transaksi extends BaseController
             'id_user_pengajuan' => $session->get('id_user'),
             'id_penduduk' => $_POST['id_penduduk'],
             'id_jenis_bantuan' => $_POST['jenis_bantuan'],
-            'id_status' => 1,
+            'id_status' => 8,
             'tanggal_pengajuan' => date('Y-m-d h:i:s'),
             'tanggal_selesai' => NULL,
             'kategori' => json_encode($_POST['kategori'])
