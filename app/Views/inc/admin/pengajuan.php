@@ -5,7 +5,9 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-info text-white btn-teruskan">Teruskan</button>
-                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-secondary text-white btn-tolak">Tolak</button>
+                <?php $session = \Config\Services::session(); if($session->get('nama_tingkat_adm') == 'Desa'): ?>
+                  <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-secondary text-white btn-tolak">Tolak</button>
+                <?php endif ?>
             </div>
             &nbsp;
             <?php $session = \Config\Services::session(); if($session->get('nama_tingkat_adm') != 'Desa'): ?>
