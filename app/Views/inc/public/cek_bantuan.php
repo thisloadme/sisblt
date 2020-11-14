@@ -13,7 +13,8 @@
             <div id="status">Disetujui Lurah</div></center>
         </div>
         <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+            <div id="noantri">Disetujui Lurah</div></center>
         </div>
         </div>
     </div>
@@ -51,11 +52,12 @@
                 
                 var i;
                 var tag_sel = '';
-
+                
                 if(row.data.length > 0){
                     for (i = 0; i < row.data.length; i++) {
                         $('#nama_penerima').text('Atas Nama '+row.data[i].nama_penduduk);
                         $('#status').text('Status '+row.data[i].nama_status);
+                        $('#noantri').text('No Antrian '+row.data[i].id_pengajuan);
                     }
                 }else{
                     $('#nama_penerima').text('Anda Belum Terdaftar Sebagai Penerima');
