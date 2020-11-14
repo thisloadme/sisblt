@@ -3,9 +3,14 @@
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Realisasi</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2" style="">
+              <h5> Jumlah Plafon Anggaran : <?php echo 'Rp.'.$totalplafon; ?></h5>    
+              &nbsp        
+              <h5> | Sisa Plafon Anggaran : <?php echo 'Rp.'.$sisa_plafon; ?></h5>            
+            </div>
             <div class="btn-group mr-2">
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-info text-white btn-teruskan">Dicairkan</button>
-                <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-secondary text-white btn-tolak">Tolak</button>
+                <!-- <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-secondary text-white btn-tolak">Tolak</button> -->
             </div>
             &nbsp;
             <div class="btn-group mr-2">
@@ -314,39 +319,6 @@
           swal('Gagal', {icon: 'warning'});
         }
         $('#modal-setuju').modal('hide');
-      }
-    })
-  })
-
-  $('.btn-tolak').click(function(){
-    var id = $('#example2 tbody tr.selected').length
-    if(id > 0){
-      $('#modal-tolak').modal('show')
-    }else{
-      swal('Tidak ada data yang terpilih', {icon: 'warning'});
-    }
-  })
-
-  $('.btn-proses-tolak').click(function(){
-    var idx = table.cell('.selected', 0).index();
-    var data = table.row( idx.row ).data();
-    var id_pengajuan = data.id_pengajuan;
-
-    $.ajax({
-      url: '/realisasi/tolak',
-      method: 'post',
-      data: {
-        id: id_pengajuan,
-      },
-      success: function(data){
-        var obj = JSON.parse(data);
-        if (obj.success) {
-          swal('Berhasil', {icon: 'success'});
-          table.ajax.reload();
-        }else{
-          swal('Gagal', {icon: 'warning'});
-        }
-        $('#modal-tolak').modal('hide');
       }
     })
   })

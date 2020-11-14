@@ -232,8 +232,7 @@
 
   $('.btn-tambah').click(function(){
     $('#judul_modal_tambah').html('Tambah Data Kartu Keluarga')
-    $('#form-tambah').find('input').val('')
-    $('#form-tambah').find('select').val('')
+    $("#form-tambah")[0].reset() 
     $('#tipe').val('add')    
     $('#modal-tambah').modal('show')
   })
