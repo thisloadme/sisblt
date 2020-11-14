@@ -124,7 +124,7 @@ class Transaksi extends BaseController
     function teruskan()
     {
         $session = \Config\Services::session();
-
+        
         $status = '';
         if($session->get('nama_user') == 'rw'){
             $status = 2;

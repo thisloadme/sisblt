@@ -20,7 +20,7 @@ class T_pengajuan extends Model
         ->join('m_kk', 'm_kk.no_kk = m_penduduk.id_kk', 'left')
         ->join('m_jenis_bantuan', 'm_jenis_bantuan.id_jenis_bantuan = t_pengajuan.id_jenis_bantuan', 'left')
         ->join('m_status', 'm_status.id_status = t_pengajuan.id_status', 'left')
-        ->where('t_pengajuan.id_status not in (4,5,6)')
+        // ->where('t_pengajuan.id_status not in (4,5,6)')
         ->orderBy('t_pengajuan.id_status', 'desc')
         ->get()->getResult();
         foreach ($q as $k => $a) {
@@ -92,6 +92,11 @@ class T_pengajuan extends Model
     }
 
     public function teruskan($data, $where)
+    {
+    	return $this->db->table('t_pengajuan')->update($data, $where);
+    }
+
+    public function tolak($data, $where)
     {
     	return $this->db->table('t_pengajuan')->update($data, $where);
     }
