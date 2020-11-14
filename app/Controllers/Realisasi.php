@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 use App\Models\T_pengajuan;
+use App\Models\M_dashboard;
 class Realisasi extends BaseController
 {
 
@@ -18,13 +19,18 @@ class Realisasi extends BaseController
 
 	public function index()
 	{
-		$model = new T_pengajuan();
+        $model = new T_pengajuan();
+        $model2 = new M_dashboard();
         $pengajuan  = $model->get_pengajuan();
+        $totalplafon = $model2->get_total_plafon();
+        $realisasi  = $model2->get_totalsisa_plafon();
         $data = array(
             'header' => 'main-inc/admin/header',
             'konten' => 'inc/admin/realisasi',
             'footer' => 'main-inc/admin/footer',
-            'pengajuan' => $pengajuan
+            'pengajuan' => $pengajuan,
+            'totalplafon' => $totalplafon,
+            'sisa_plafon' => $totalplafon-$realisasi
         );
         echo view('template',$data);
 	}
@@ -70,9 +76,16 @@ class Realisasi extends BaseController
     {
         $session = \Config\Services::session();
 
+        $status = '';
+        if($session->get('nama_user') == 'rw'){
+            $status = 4;
+        }else{
+            $status = 6;
+        }
+
         $model = new T_pengajuan();
         $data = array(
-            'id_status' => 6,
+            'id_status' => $status,
         );
         $where = array(
             'id_pengajuan' => $_POST['id']
