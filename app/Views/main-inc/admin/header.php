@@ -29,7 +29,19 @@
         <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">SIS - BLT <img src="..\media\img\pwni.png" style="float: right" width="25px" alt=""></a>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link text-white" href="/login">Keluar</a>
+                <h5 class="text-white" style="display: inline-block"><small>Anda login sebagai:</small> <?php 
+                if (session()->get('nama_tingkat_adm') == 'Desa') {
+                    echo session()->get('nama_tingkat_adm');                    
+                }elseif (session()->get('nama_tingkat_adm') == 'RW') {
+                    echo session()->get('nama_tingkat_adm').' '.session()->get('rw');
+                }else {
+                    echo 'RW '.session()->get('rw').' RT '.session()->get('rt');
+                }
+
+                ?></h5>
+                &nbsp;
+                <div style="border-right: 5px solid white; display: inline-block"></div>
+                <a class="nav-link text-white" style="display: inline-block;" href="/login">Keluar</a>
             </li>
         </ul>
     </nav>
