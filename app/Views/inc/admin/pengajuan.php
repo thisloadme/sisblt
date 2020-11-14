@@ -117,6 +117,89 @@
                 
               </select>
             </div>
+            <div class="form-group">
+              <label>Kategori</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Luas lantai < 8m2 /orang" name="kategori[]">
+                      <label class="form-check-label">Luas lantai < 8m2 /orang</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Lantai tanah/bambu/kayu murah" name="kategori[]">
+                      <label class="form-check-label">Lantai tanah/bambu/kayu murah</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Dinding bambu/rumbia/kayu murah/tembok tanpa plester" name="kategori[]">
+                      <label class="form-check-label">Dinding bambu/rumbia/kayu murah/tembok tanpa plester</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Buang Air Besar tanpa fasilitas/bersama orang lain" name="kategori[]">
+                      <label class="form-check-label">Buang Air Besar tanpa fasilitas/bersama orang lain</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Penerangan tanpa listrik" name="kategori[]">
+                      <label class="form-check-label">Penerangan tanpa listrik</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Air minum dari sumur/mata air tidak terlindung/sungai/air hujan" name="kategori[]">
+                      <label class="form-check-label">Air minum dari sumur/mata air tidak terlindung/sungai/air hujan</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Bahan bakar kayu bakar/arang/minyak tanah" name="kategori[]">
+                      <label class="form-check-label">Bahan bakar kayu bakar/arang/minyak tanah</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Konsumsi daging/susu/ayam hanya 1 kali/minggu" name="kategori[]">
+                      <label class="form-check-label">Konsumsi daging/susu/ayam hanya 1 kali/minggu</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Satu stel pakaian setahun" name="kategori[]">
+                      <label class="form-check-label">Satu stel pakaian setahun</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Makan 1-2 kali/hari" name="kategori[]">
+                      <label class="form-check-label">Makan 1-2 kali/hari</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Tidak sanggup berobat ke puskesmas/poliklinik" name="kategori[]">
+                      <label class="form-check-label">Tidak sanggup berobat ke puskesmas/poliklinik</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Sumber penghasilan KK petani berlahan <500m2, buruh tani, buruh nelayan,buruh bangunan, buruh perkebunan, pekerjaan lain berupah < Rp 600 ribu/bulan" name="kategori[]">
+                      <label class="form-check-label">Sumber penghasilan KK petani berlahan <500m2, buruh tani, buruh nelayan,buruh bangunan, buruh perkebunan, pekerjaan lain berupah < Rp 600 ribu/bulan</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Pendidikan KK Tidak sekolah/tidak tamat SD/tamat SD" name="kategori[]">
+                      <label class="form-check-label">Pendidikan KK Tidak sekolah/tidak tamat SD/tamat SD</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Tidak memiliki tabungan/barang mudah dijual minimal Rp 500 ribu" name="kategori[]">
+                      <label class="form-check-label">Tidak memiliki tabungan/barang mudah dijual minimal Rp 500 ribu</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Kehilangan Mata Pencaharian Karena Covid" name="kategori[]">
+                      <label class="form-check-label">Kehilangan Mata Pencaharian Karena Covid</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Belum pernah menerima bansos lain dari pusat" name="kategori[]">
+                      <label class="form-check-label">Belum pernah menerima bansos lain dari pusat</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="upload_bukti">Upload Bukti</label>
+              <div class="input-group">
+                <input type="file" name="bukti">
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer justify-content-between">
@@ -335,25 +418,43 @@
     }
     
     var tipe = $('#tipe').val();
-    let formData = $("#form-tambah").serializeArray();
-    formData.push({"name":"tipe","value":tipe},{"name":"id","value":id_pengajuan});
-    var data = {};
+    // let formData = $("#form-tambah").serializeArray();
+    // formData.push({"name":"tipe","value":tipe},{"name":"id","value":id_pengajuan});
+    // var data = {};
+    // var kategori = []
     
-    $.map(formData, function(n, i){
-        data[n['name']] = n['value'];
-    });
+    // $.map(formData, function(n, i){
+    //     if (n['name'] == 'kategori[]') {
+    //         kategori.push(n['value'])
+    //     }else{
+    //         data[n['name']] = n['value'];
+    //     }
+    // });
+    // data['kategori[]'] = kategori
+    // data['bukti'] = $('input[type=file]')[0].files[0]
+    // console.log(data)
+
+    //tak ganti pake gini, biar file bisa diupload --Dion 14/11
+    var form = $('#form-tambah')[0];
+    var formData = new FormData(form);
+    formData.append('tipe', tipe);
+    formData.append('id', id_pengajuan);
+    formData.append('bukti', $('input[type=file]')[0].files[0]); 
 
     $.ajax({
       url: '/transaksi/simpan',
-      data: data,
-      method: 'post',
+      data: formData,
+      type: 'POST',
+      contentType: false,   
+      cache: false,         
+      processData:false,
       success: function(data){
         var obj = JSON.parse(data);
         if (obj.success) {
-          swal('Berhasil', {icon: 'success'});
+          swal(obj.msg, {icon: 'success'});
           table.ajax.reload();
         }else{
-          swal('Gagal', {icon: 'warning'});
+          swal(obj.msg, {icon: 'warning'});
         }
         $('#modal-tambah').modal('hide');
       }

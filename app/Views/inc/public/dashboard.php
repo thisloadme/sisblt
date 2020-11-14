@@ -4,6 +4,12 @@ foreach ($setuju as $val): ?>
   <?php $total += $val->nominal ?>
 <?php endforeach ?>
 
+<?php
+$real = 0;
+foreach ($realisasi as $vals): ?>
+  <?php $real += $vals->nominal ?>
+<?php endforeach ?>
+
 <div class="row" style="width: 100%; margin: 150px 0px 50px 0px;">
   <div class="col-sm-12">
     <div class="card">
@@ -35,8 +41,8 @@ foreach ($setuju as $val): ?>
               <div class="col-sm-3"></div>
               <div class="col-sm-12">
                 <ul class="spacertop" style="padding-left: 0px">
-                    <li style="list-style: none;"><div style="width: 12px; height: 12px; background: #e84c3d;display: inline-block;"></div>&nbsp;Sudah Direalisasikan : Rp <?php echo number_format($total, null, '', '.') ?></li>
-                    <li style="list-style: none;"><div style="width: 12px; height: 12px; background: #f59d1f;display: inline-block;"></div>&nbsp;Belum Direalisasikan : Rp <?php echo number_format($totalplafon - $total, null, '', '.') ?></li>
+                    <li style="list-style: none;"><div style="width: 12px; height: 12px; background: #e84c3d;display: inline-block;"></div>&nbsp;Sudah Direalisasikan : Rp <?php echo number_format($real, null, '', '.') ?></li>
+                    <li style="list-style: none;"><div style="width: 12px; height: 12px; background: #f59d1f;display: inline-block;"></div>&nbsp;Belum Direalisasikan : Rp <?php echo number_format($totalplafon - $real, null, '', '.') ?></li>
                     <li style="list-style: none;"><div style="width: 12px; height: 12px;display: inline-block;"></div>&nbsp;Total Dana : Rp <?php echo number_format($totalplafon, null, '', '.') ?></li>
                 </ul>
               </div>
@@ -112,7 +118,7 @@ foreach ($setuju as $val): ?>
               </thead>
               <tbody>
 
-                  <?php foreach ($setuju as $key => $val): ?>
+                  <?php foreach ($realisasi as $key => $val): ?>
                       <tr>
                           <td><?php echo $key+1 ?></td>
                           <td><?php echo $val->no_ktp ?></td>
@@ -167,12 +173,12 @@ foreach ($setuju as $val): ?>
       datasets: [
           {
               data: [
-                  "<?php echo $total ?>",
-                  "<?php echo $totalplafon - $total ?>",
+                  "<?php echo $real ?>",
+                  "<?php echo $totalplafon - $real ?>",
               ],
               var: [
-                  "Rp <?php echo number_format($total, null, '', '.') ?>",
-                  "Rp <?php echo number_format($totalplafon - $total, null, '', '.') ?>",
+                  "Rp <?php echo number_format($real, null, '', '.') ?>",
+                  "Rp <?php echo number_format($totalplafon - $real, null, '', '.') ?>",
               ],
               idnya: [
                 "sudah",

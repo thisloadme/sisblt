@@ -14,6 +14,8 @@ class Transaksi extends BaseController
         if ($this->sess->get('nama_user') == '') {
             return redirect()->to('/login');
         }
+
+        helper('form');
     }
 
 	public function index()
@@ -54,6 +56,10 @@ class Transaksi extends BaseController
     {
         $session = \Config\Services::session();
         
+        if ($_POST['id'] == 'null') {
+            $_POST['id'] = null;
+        }
+
         $tipe = $_POST['tipe'];
         $data = array(
             'id_user_pengajuan' => $session->get('id_user'),
@@ -61,22 +67,49 @@ class Transaksi extends BaseController
             'id_jenis_bantuan' => $_POST['jenis_bantuan'],
             'id_status' => 1,
             'tanggal_pengajuan' => date('Y-m-d h:i:s'),
-            'tanggal_selesai' => ''
+            'tanggal_selesai' => NULL,
+            'kategori' => json_encode($_POST['kategori'])
         );
 
         $model = new T_pengajuan();
         if ($tipe == 'add') {   
-            $res  = $model->tambah_data($data);
-            if ($res) {
-                $arr = array(
-                    'success' => true,
-                    'msg' => 'berhasil'
-                );
-            }else {
+            if ($this->request->getMethod() !== 'post') {
+                return redirect()->to(base_url('upload'));
+            }
+     
+            $validated = $this->validate([
+                'bukti' => 'uploaded[bukti]|mime_in[bukti,application/x-zip,application/zip,application/x-zip-compressed,application/x-rar,application/rar,application/x-rar-compressed]|max_size[bukti,4096]'
+            ]);
+
+            if ($validated == FALSE) {
+                 
                 $arr = array(
                     'success' => false,
-                    'msg' => 'gagal'
+                    'msg' => 'Upload bukti terlebih dahulu'
                 );
+                echo json_encode($arr);
+                exit();
+     
+            } else {
+     
+                $avatar = $this->request->getFile('bukti');
+                $avatar->move(ROOTPATH . 'public/bukti');
+     
+                $data['bukti'] = $avatar->getName();
+         
+                $res  = $model->tambah_data($data);
+
+                if ($res) {
+                    $arr = array(
+                        'success' => true,
+                        'msg' => 'berhasil disimpan'
+                    );
+                }else {
+                    $arr = array(
+                        'success' => false,
+                        'msg' => 'gagal disimpan'
+                    );
+                }
             }
         }else {
             $id = $_POST['id'];
@@ -87,12 +120,12 @@ class Transaksi extends BaseController
             if ($res) {
                 $arr = array(
                     'success' => true,
-                    'msg' => 'berhasil'
+                    'msg' => 'berhasil diubah'
                 );
             }else {
                 $arr = array(
                     'success' => false,
-                    'msg' => 'gagal'
+                    'msg' => 'gagal diubah'
                 );
             }
         }
