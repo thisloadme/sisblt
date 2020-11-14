@@ -50,6 +50,15 @@
                             </a>
                             <hr class="bg-light">
                         </li>
+                        <?php $session = \Config\Services::session(); if($session->get('nama_user') == 'kades'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/realisasi">
+                                <span data-feather="file"></span>
+                                Realisasi
+                            </a>
+                            <hr class="bg-light">
+                        </li>
+                        <?php endif; ?>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="/plafon">
                                 <span data-feather="file"></span>

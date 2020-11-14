@@ -101,7 +101,15 @@ class Laporan extends BaseController
 
     public function cetak_penduduk()
     {
-        
+        $model = new M_laporan();
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
     }
 }
 
