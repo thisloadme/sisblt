@@ -36,7 +36,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form id="form-tambah">
             <div class="form-group">
               <label for="nama_status">Nama Status</label>
               <input type="text" class="form-control" id="nama_status" placeholder="Nama Status">
@@ -136,6 +136,7 @@
     $('#judul_modal_tambah').html('Tambah Status')
     $('#tipe').val('add')
     $('#nama_status').val('')
+    $("#form-tambah")[0].reset() 
     $('#modal-tambah').modal('show')
   })
 

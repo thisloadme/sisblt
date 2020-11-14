@@ -38,7 +38,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
+              <form id="form-tambah">
                 <div class="form-group">
                   <label for="jenis_bantuan">Jenis Bantuan</label>
                   <input type="text" class="form-control" id="jenis_bantuan" placeholder="Jenis Bantuan">
@@ -123,6 +123,7 @@
   $('.btn-tambah').click(function(){
     $('#judul_modal_tambah').html('Tambah Jenis Bantuan')
     $('#tipe').val('add')
+    $("#form-tambah")[0].reset() 
     $('#modal-tambah').modal('show')
   })
 

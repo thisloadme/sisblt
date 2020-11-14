@@ -180,6 +180,7 @@
     $('#password').val('')
     $('#password2').val('')
     $('#adm').val('')
+    $("#form-tambah")[0].reset() 
     $('#modal-tambah').modal('show')
   })
 

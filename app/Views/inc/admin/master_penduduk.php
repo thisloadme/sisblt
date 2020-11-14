@@ -337,6 +337,7 @@
   $('.btn-tambah').click(function(){
     $('#judul_modal_tambah').html('Tambah Data Penduduk')
     $('#tipe').val('add')
+    $("#form-tambah")[0].reset() 
     $('#modal-tambah').modal('show')
   })
 

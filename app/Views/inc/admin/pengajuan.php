@@ -464,11 +464,8 @@
   $('.btn-tambah').click(function(){
     $('#judul_modal_tambah').html('Tambah Pengajuan')
     $('#tipe').val('add')
-    $('#nama_user').val('')
-    $('.field_password').show()
-    $('#password').val('')
-    $('#password2').val('')
     $('#adm').val('')
+    $("#form-tambah")[0].reset() 
     $('#modal-tambah').modal('show')
       $.ajax({
           type: "POST",
