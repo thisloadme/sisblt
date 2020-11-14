@@ -7,6 +7,7 @@ class Dashboard extends BaseController
 	{
 		$model = new M_dashboard();
         $setuju  = $model->get_pengajuan_setujui();
+        $realisasi  = $model->get_pengajuan_realisasi();
         $semua  = $model->get_pengajuan_dashboard();
         $totalpenduduk = $model->get_total_penduduk();
         $totalplafon = $model->get_total_plafon();
@@ -17,7 +18,8 @@ class Dashboard extends BaseController
             'semua'	=> $semua,
             'setuju' => $setuju,
             'totalpenduduk' => $totalpenduduk,
-            'totalplafon' => $totalplafon
+            'totalplafon' => $totalplafon,
+            'realisasi' => $realisasi
         );
         echo view('template',$data);
 	}
