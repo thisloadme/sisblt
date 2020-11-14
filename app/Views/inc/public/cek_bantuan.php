@@ -14,7 +14,7 @@
         </div>
         <div class="modal-footer justify-content-between">
             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-            <div id="noantri">Disetujui Lurah</div></center>
+            <div id="noantri"></div></center>
         </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             url: "/transaksi/get_data_bynik",
             success: function(row, data, i){
                 var row = JSON.parse(row);
-                
+                console.log(row);
                 var i;
                 var tag_sel = '';
                 
@@ -57,7 +57,9 @@
                     for (i = 0; i < row.data.length; i++) {
                         $('#nama_penerima').text('Atas Nama '+row.data[i].nama_penduduk);
                         $('#status').text('Status '+row.data[i].nama_status);
-                        $('#noantri').text('No Antrian '+row.data[i].id_pengajuan);
+                        if(row.data[i].id_status == 6){
+                            $('#noantri').text('No Antrian '+row.data[i].id_pengajuan);
+                        }
                     }
                 }else{
                     $('#nama_penerima').text('Anda Belum Terdaftar Sebagai Penerima');
