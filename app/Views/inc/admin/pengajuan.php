@@ -242,7 +242,7 @@
     </div>
   </div>
   <div class="modal fade" id="modal-cari-penduduk" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="max-width: 1250px!important">
+    <div class="modal-dialog modal-lg" style="max-width: 1350px!important">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" style="text-align: center;">Daftar Penduduk</h4>
