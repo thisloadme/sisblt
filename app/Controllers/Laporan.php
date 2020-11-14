@@ -71,7 +71,7 @@ class Laporan extends BaseController
             ],
         ];
 
-        $data = $model->get_daftar_penerima_blt();
+        $data = $model->get_calon_penerima_blt();
         $excel = IOFactory::load('././template/penerima-berdasarkan-ktp.xlsx');
         
         $numrow = 7;
@@ -101,6 +101,8 @@ class Laporan extends BaseController
 
     public function cetak_penduduk()
     {
+        echo '<pre>'.print_r('Coming soon',1).'</pre>';
+        exit();
         $model = new M_laporan();
         $styleArray = [
             'borders' => [
