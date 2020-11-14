@@ -13,25 +13,46 @@ class M_plafon extends Model
 		$this->db =& $db;
 	}
      
-    public function get_plafon()
+    public function get_plafon($sess)
     {
-        $q = $this->db->table('m_tingkat_adm')
-        ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', '"Kepala Desa / Lurah" nama_tingkat_adm', 'plafon'])
-        ->where('rt', NULL)
-        ->where('rw', NULL)
-        ->get()->getResult();
+        if ($sess['nama_tingkat_adm'] == 'Desa') {
+            $q = $this->db->table('m_tingkat_adm')
+            ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', '"Kepala Desa / Lurah" nama_tingkat_adm', 'plafon'])
+            ->where('rt', NULL)
+            ->where('rw', NULL)
+            ->get()->getResult();
 
-        $w = $this->db->table('m_tingkat_adm')
-        ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw) nama_tingkat_adm', 'plafon'])
-        ->where('rt', NULL)
-        ->where('rw is not', NULL)
-        ->get()->getResult();
+            $w = $this->db->table('m_tingkat_adm')
+            ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw) nama_tingkat_adm', 'plafon'])
+            ->where('rt', NULL)
+            ->where('rw is not', NULL)
+            ->get()->getResult();
 
-        $e = $this->db->table('m_tingkat_adm')
-        ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw, " RT ", rt) nama_tingkat_adm', 'plafon'])
-        ->where('rt is not', NULL)
-        ->where('rw is not', NULL)
-        ->get()->getResult();
+            $e = $this->db->table('m_tingkat_adm')
+            ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw, " RT ", rt) nama_tingkat_adm', 'plafon'])
+            ->where('rt is not', NULL)
+            ->where('rw is not', NULL)
+            ->get()->getResult();
+
+        }else {
+            $q = $this->db->table('m_tingkat_adm')
+            ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', '"Kepala Desa / Lurah" nama_tingkat_adm', 'plafon'])
+            ->where('rt', NULL)
+            ->where('rw', NULL)
+            ->get()->getResult();
+
+            $w = $this->db->table('m_tingkat_adm')
+            ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw) nama_tingkat_adm', 'plafon'])
+            ->where('rt', NULL)
+            ->where('rw', $sess['rw'])
+            ->get()->getResult();
+
+            $e = $this->db->table('m_tingkat_adm')
+            ->select(['tahun', 'rt', 'rw', 'id_tingkat_adm', 'CONCAT("RW ", rw, " RT ", rt) nama_tingkat_adm', 'plafon'])
+            ->where('rt is not', NULL)
+            ->where('rw', $sess['rw'])
+            ->get()->getResult();
+        }
 
         $arr = array_merge($q,$w,$e);
 

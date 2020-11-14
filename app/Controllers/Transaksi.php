@@ -21,7 +21,7 @@ class Transaksi extends BaseController
 	public function index()
 	{
 		$model = new T_pengajuan();
-        $pengajuan  = $model->get_pengajuan();
+        $pengajuan  = $model->get_pengajuan($this->sess->get());
         $data = array(
             'header' => 'main-inc/admin/header',
             'konten' => 'inc/admin/pengajuan',
@@ -34,7 +34,7 @@ class Transaksi extends BaseController
     function get_data()
     {
         $model = new T_pengajuan();
-        $res  = $model->get_pengajuan();
+        $res  = $model->get_pengajuan($this->sess->get());
         $arr = array(
             'data' => $res
         );

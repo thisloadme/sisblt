@@ -2,14 +2,23 @@
 use App\Models\M_plafon;
 class Plafon extends BaseController
 {
+
+    protected $sess;
+
+    public function __construct()
+    {
+        $session = \Config\Services::session();
+        $this->sess =& $session;
+    }
+
 	public function index()
 	{
-        return $this->get_plafon();
+        return $this->get_plafon($this->sess->get());
     }
     
     function get_plafon() {
         $model = new M_plafon();
-        $res = $model->get_plafon();
+        $res = $model->get_plafon($this->sess->get());
         $data = array(
             'header' => 'main-inc/admin/header',
             'konten' => 'inc/admin/plafon',
@@ -22,7 +31,7 @@ class Plafon extends BaseController
     function get_data()
     {
         $model = new M_plafon();
-        $res = $model->get_plafon();
+        $res = $model->get_plafon($this->sess->get());
         echo json_encode($res);
     }
 

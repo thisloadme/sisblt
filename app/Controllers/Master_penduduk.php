@@ -4,14 +4,22 @@ use App\Models\M_penduduk;
 
 class Master_penduduk extends BaseController
 {
+    protected $sess;
+
+    public function __construct()
+    {
+        $session = \Config\Services::session();
+        $this->sess =& $session;
+    }
+
 	public function index()
 	{
-        return $this->get_penduduk();
+        return $this->get_penduduk($this->sess->get());
     }
     
     function get_penduduk () {
         $model = new M_penduduk();
-        $penduduk  = $model->get_penduduk();
+        $penduduk  = $model->get_penduduk($this->sess->get());
         $data = array(
             'header' => 'main-inc/admin/header',
             'konten' => 'inc/admin/master_penduduk',
@@ -25,7 +33,7 @@ class Master_penduduk extends BaseController
     function get_data()
     {
         $model = new M_penduduk();
-        $res  = $model->get_penduduk();
+        $res  = $model->get_penduduk($this->sess->get());
         $arr = array(
             'data' => $res
         );

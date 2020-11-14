@@ -13,9 +13,20 @@ class M_penduduk extends Model
 		$this->db =& $db;
 	}
      
-    public function get_penduduk()
+    public function get_penduduk($sess)
     {
-        $q = $this->db->table('m_penduduk')->get()->getResult();
+        if ($sess['nama_tingkat_adm'] == 'Desa') {
+            $q = $this->db->table('m_penduduk')->get()->getResult();
+        }elseif ($sess['nama_tingkat_adm'] == 'RW') {
+            $q = $this->db->table('m_penduduk')
+            ->where('rw', $sess['rw'])
+            ->get()->getResult();
+        }else {
+            $q = $this->db->table('m_penduduk')
+            ->where('rt', $sess['rt'])
+            ->where('rw', $sess['rw'])
+            ->get()->getResult();
+        }
         foreach ($q as $k => $a) {
         	$q[$k]->no = $k+1;
         	$q[$k]->ttl = $a->tempat_lahir.', '.date('d F Y', strtotime($a->tanggal_lahir));

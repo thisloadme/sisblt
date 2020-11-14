@@ -46,5 +46,13 @@ class Login extends BaseController
     		exit();
     	}
 	}
+
+	public function logout()
+	{	
+		$session = \Config\Services::session();
+		$session->destroy();
+
+		return redirect()->to('/login'); 
+	}
 }
 
