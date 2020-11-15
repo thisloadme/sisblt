@@ -422,23 +422,6 @@
     }
     
     var tipe = $('#tipe').val();
-    // let formData = $("#form-tambah").serializeArray();
-    // formData.push({"name":"tipe","value":tipe},{"name":"id","value":id_pengajuan});
-    // var data = {};
-    // var kategori = []
-    
-    // $.map(formData, function(n, i){
-    //     if (n['name'] == 'kategori[]') {
-    //         kategori.push(n['value'])
-    //     }else{
-    //         data[n['name']] = n['value'];
-    //     }
-    // });
-    // data['kategori[]'] = kategori
-    // data['bukti'] = $('input[type=file]')[0].files[0]
-    // console.log(data)
-
-    //tak ganti pake gini, biar file bisa diupload --Dion 14/11
     var form = $('#form-tambah')[0];
     var formData = new FormData(form);
     formData.append('tipe', tipe);
@@ -477,7 +460,6 @@
           url: "/master_jenis_bantuan/get_data",
           success: function(row, data, i){
             var row = JSON.parse(row);
-            // console.log(row.data[0].id_jenis_bantuan);
             var i;
             var tag_sel = '';
             for (i = 0; i <= row.data.length; i++) {
@@ -516,7 +498,6 @@
           url: "/master_jenis_bantuan/get_data",
           success: function(row, data, i){
             var row = JSON.parse(row);
-            // console.log(row.data[0].id_jenis_bantuan);
             var i;
             var tag_sel = '';
             for (i = 0; i <= row.data.length; i++) {

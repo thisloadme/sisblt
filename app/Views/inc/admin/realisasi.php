@@ -11,7 +11,6 @@
             <div class="btn-group mr-2">
               <?php $session = \Config\Services::session(); if($session->get('nama_tingkat_adm') != 'RT'): ?>
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-info text-white btn-teruskan">Dicairkan</button>
-                <!-- <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-secondary text-white btn-tolak">Tolak</button> -->
               <?php endif ?>
             </div>
             &nbsp;
