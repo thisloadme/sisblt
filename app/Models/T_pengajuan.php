@@ -55,7 +55,7 @@ class T_pengajuan extends Model
         ->join('m_kk', 'm_kk.no_kk = m_penduduk.id_kk', 'left')
         ->join('m_jenis_bantuan', 'm_jenis_bantuan.id_jenis_bantuan = t_pengajuan.id_jenis_bantuan', 'left')
         ->join('m_status', 'm_status.id_status = t_pengajuan.id_status', 'left')
-        ->where('t_pengajuan.id_status', 7)
+        ->whereIn('t_pengajuan.id_status', array(3,7))
         ->orderBy('t_pengajuan.id_status', 'desc')
         ->get()->getResult();
 
