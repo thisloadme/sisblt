@@ -15,11 +15,11 @@ class T_pengajuan extends Model
     public function get_pengajuan($sess)
     {
         if ($sess['nama_tingkat_adm'] == 'Desa') {
-            $status = array(2,3,7);
+            $status = array(2,3,6,7);
         }elseif (strtolower($sess['nama_tingkat_adm']) == 'rw') {
-            $status = array(1,2);
+            $status = array(1,2,4,6);
         }else {
-            $status = array(8,1);
+            $status = array(8,1,5,4,6);
         }
         $q = $this->db->table('t_pengajuan')
         ->join('m_user', 'm_user.id_user = t_pengajuan.id_user_pengajuan', 'left')
