@@ -77,7 +77,7 @@ class Realisasi extends BaseController
         $session = \Config\Services::session();
 
         $status = '';
-        if($session->get('nama_user') == 'rw'){
+        if($session->get('nama_tingkat_adm') == 'rw'){
             $status = 4;
         }else{
             $status = 6;
