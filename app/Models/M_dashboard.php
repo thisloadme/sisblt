@@ -71,12 +71,18 @@ class M_dashboard extends Model
 
     public function get_total_plafon($sess='')
     {
-        if ($sess['nama_tingkat_adm'] == 'Desa') {
-            $where = 'where rw is not null';
-        }elseif ($sess['nama_tingkat_adm'] == 'RW') {
-            $where = 'where rw ='.$sess['rw'];
+        if ($sess == '') {
+            $where = '';
         }else {
-            $where = 'where rw = '.$sess['rw'].' and rt = '.$sess['rt'];
+            if ($sess['nama_tingkat_adm'] == 'Desa') {
+                $where = 'where rw is not null';
+            }elseif (strtolower($sess['nama_tingkat_adm']) == 'rw') {
+                $where = 'where rw ='.$sess['rw'];
+            }elseif (strtolower($sess['nama_tingkat_adm']) == 'rt') {
+                $where = 'where rw = '.$sess['rw'].' and rt = '.$sess['rt'];
+            }else {
+                $where = 'where rw = '.$sess['rw'].' and rt = '.$sess['rt']; 
+            }
         }
         $q = $this->db->query("
                 SELECT sum(plafon) plafon
@@ -88,12 +94,16 @@ class M_dashboard extends Model
 
     public function get_totalsisa_plafon($sess='')
     {
-        if ($sess['nama_tingkat_adm'] == 'Desa') {
+        if ($sess == '') {
             $where = '';
-        }elseif ($sess['nama_tingkat_adm'] == 'RW') {
-            $where = 'and mp.rw = '.$sess['rw'];
         }else {
-            $where = 'and mp.rw = '.$sess['rw'].' and mp.rt = '.$sess['rt'];
+            if ($sess['nama_tingkat_adm'] == 'Desa') {
+                $where = '';
+            }elseif (strtolower($sess['nama_tingkat_adm']) == 'rw') {
+                $where = 'and mp.rw = '.$sess['rw'];
+            }else {
+                $where = 'and mp.rw = '.$sess['rw'].' and mp.rt = '.$sess['rt'];
+            }
         }
         $q = $this->db->query("
                 SELECT sum(mj.nominal) nominal
