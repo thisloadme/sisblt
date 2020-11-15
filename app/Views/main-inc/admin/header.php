@@ -32,7 +32,7 @@
                 <h5 class="text-white" style="display: inline-block"><small>Anda login sebagai:</small> <?php 
                 if (session()->get('nama_tingkat_adm') == 'Desa') {
                     echo session()->get('nama_tingkat_adm');                    
-                }elseif (session()->get('nama_tingkat_adm') == 'RW') {
+                }elseif (strtoupper(session()->get('nama_tingkat_adm')) == 'RW') {
                     echo session()->get('nama_tingkat_adm').' '.session()->get('rw');
                 }else {
                     echo 'RW '.session()->get('rw').' RT '.session()->get('rt');

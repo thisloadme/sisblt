@@ -17,7 +17,7 @@ class M_penduduk extends Model
     {
         if ($sess['nama_tingkat_adm'] == 'Desa') {
             $q = $this->db->table('m_penduduk')->get()->getResult();
-        }elseif ($sess['nama_tingkat_adm'] == 'RW') {
+        }elseif (strtolower($sess['nama_tingkat_adm']) == 'rw') {
             $q = $this->db->table('m_penduduk')
             ->where('rw', $sess['rw'])
             ->get()->getResult();

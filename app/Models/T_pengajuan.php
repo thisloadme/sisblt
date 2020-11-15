@@ -16,7 +16,7 @@ class T_pengajuan extends Model
     {
         if ($sess['nama_tingkat_adm'] == 'Desa') {
             $status = array(2,3,7);
-        }elseif ($sess['nama_tingkat_adm'] == 'RW') {
+        }elseif (strtolower($sess['nama_tingkat_adm']) == 'rw') {
             $status = array(1,2);
         }else {
             $status = array(8,1);
@@ -32,11 +32,11 @@ class T_pengajuan extends Model
         ->get()->getResult();
 
         foreach ($q as $k => $a) {
-            if ($sess['nama_tingkat_adm'] == 'RW') {
+            if (strtolower($sess['nama_tingkat_adm']) == 'rw') {
                 if ($a->rw != $sess['rw']) {
                     unset($q[$k]);
                 }
-            }elseif ($sess['nama_tingkat_adm'] == 'RT') {
+            }elseif (strtolower($sess['nama_tingkat_adm']) == 'rw') {
                 if ($a->rw != $sess['rw'] and $a->rt != $sess['rt']) {
                     unset($q[$k]);
                 }
@@ -60,11 +60,11 @@ class T_pengajuan extends Model
         ->get()->getResult();
 
         foreach ($q as $k => $a) {
-            if ($sess['nama_tingkat_adm'] == 'RW') {
+            if (strtoupper($sess['nama_tingkat_adm']) == 'RW') {
                 if ($a->rw != $sess['rw']) {
                     unset($q[$k]);
                 }
-            }elseif ($sess['nama_tingkat_adm'] == 'RT') {
+            }elseif (strtoupper($sess['nama_tingkat_adm']) == 'RT') {
                 if ($a->rw != $sess['rw'] and $a->rt != $sess['rt']) {
                     unset($q[$k]);
                 }

@@ -159,9 +159,9 @@ class Transaksi extends BaseController
         $session = \Config\Services::session();
         
         $status = '';
-        if($session->get('nama_tingkat_adm') == 'rt'){
+        if(strtolower($session->get('nama_tingkat_adm')) == 'rt'){
             $status = 1;
-        }else if($session->get('nama_tingkat_adm') == 'rw'){
+        }else if(strtolower($session->get('nama_tingkat_adm')) == 'rw'){
             $status = 2;
         }else{
             $status = 3;

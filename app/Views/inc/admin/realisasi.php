@@ -9,7 +9,7 @@
               <h5> | Sisa Plafon Anggaran : <?php echo 'Rp.'.$sisa_plafon; ?></h5>            
             </div>
             <div class="btn-group mr-2">
-              <?php $session = \Config\Services::session(); if($session->get('nama_tingkat_adm') != 'RT'): ?>
+              <?php $session = \Config\Services::session(); if(strtoupper($session->get('nama_tingkat_adm')) != 'RT'): ?>
                 <button type="button" style="margin: 0px 1px 0px 1px" class="btn btn-sm btn-info text-white btn-teruskan">Dicairkan</button>
               <?php endif ?>
             </div>
