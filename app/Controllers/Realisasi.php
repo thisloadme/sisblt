@@ -13,7 +13,7 @@ class Realisasi extends BaseController
         $this->sess =& $session;
 
         if ($this->sess->get('nama_user') == '') {
-            return redirect()->to('/login');
+            return redirect()->to('/login/logout');
         }
     }
 

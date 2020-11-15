@@ -48,4 +48,21 @@ class M_laporan extends Model
         $q = $this->db->query($sql)->getResult();
         return $q;
     }
+
+    public function get_total_penduduk()
+    {
+        $sql = "
+            SELECT distinct rw,
+            (select count(*) from m_kk where rw = mp.rw) jumlah_kk, 
+            (select count(*) from m_penduduk where rw = mp.rw) jumlah_jiwa, 
+            (select count(*) from m_penduduk where rw = mp.rw and jenis_kelamin = 'L') jumlah_l, 
+            (select count(*) from m_penduduk where rw = mp.rw and jenis_kelamin = 'P') jumlah_p, 
+            (select count(*) from m_penduduk where rw = mp.rw and datediff(CURDATE(), tanggal_lahir) <= 18250) jumlah_muda, 
+            (select count(*) from m_penduduk where rw = mp.rw and datediff(CURDATE(), tanggal_lahir) > 18250) jumlah_tua 
+            FROM m_penduduk mp
+        ";
+
+        $q = $this->db->query($sql)->getResult();
+        return $q;
+    }
 }

@@ -101,8 +101,6 @@ class Laporan extends BaseController
 
     public function cetak_penduduk()
     {
-        echo '<pre>'.print_r('Coming soon',1).'</pre>';
-        exit();
         $model = new M_laporan();
         $styleArray = [
             'borders' => [
@@ -112,6 +110,33 @@ class Laporan extends BaseController
                 ],
             ],
         ];
+
+        $data = $model->get_total_penduduk();
+        $excel = IOFactory::load('././template/total-penduduk.xlsx');
+        
+        $numrow = 8;
+        foreach($data as $key => $val) {
+            $excel->setActiveSheetIndex(0)
+                        ->setCellValue('A' . $numrow, $val->rw)
+                        ->setCellValue('B' . $numrow, $val->jumlah_kk)
+                        ->setCellValue('C' . $numrow, $val->jumlah_jiwa)
+                        ->setCellValue('D' . $numrow, $val->jumlah_l)
+                        ->setCellValue('E' . $numrow, $val->jumlah_p)
+                        ->setCellValue('F' . $numrow, $val->jumlah_muda)
+                        ->setCellValue('E' . $numrow, $val->jumlah_tua);
+
+            $excel->setActiveSheetIndex(0)->getStyle('A'.$numrow.':G'.$numrow)->applyFromArray($styleArray);
+            $numrow++;
+        }
+        $writer = new Xlsx($excel);
+        $fileName = 'Total Penduduk per RW';
+
+        // Redirect hasil generate xlsx ke web client
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
     }
 }
 
