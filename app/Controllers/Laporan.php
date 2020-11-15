@@ -50,7 +50,6 @@ class Laporan extends BaseController
         $writer = new Xlsx($excel);
         $fileName = 'Daftar Penerima Bantuan Langsung Tunai';
 
-        // Redirect hasil generate xlsx ke web client
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
         header('Cache-Control: max-age=0');
@@ -91,7 +90,6 @@ class Laporan extends BaseController
         $writer = new Xlsx($excel);
         $fileName = 'Calon Penerima Bantuan Langsung Tunai';
 
-        // Redirect hasil generate xlsx ke web client
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
         header('Cache-Control: max-age=0');
@@ -131,7 +129,6 @@ class Laporan extends BaseController
         $writer = new Xlsx($excel);
         $fileName = 'Total Penduduk per RW';
 
-        // Redirect hasil generate xlsx ke web client
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename='.$fileName.'.xlsx');
         header('Cache-Control: max-age=0');

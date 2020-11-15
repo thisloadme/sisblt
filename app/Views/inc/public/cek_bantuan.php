@@ -13,7 +13,6 @@
             <div id="status">Disetujui Lurah</div></center>
         </div>
         <div class="modal-footer justify-content-between">
-            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
             <div id="noantri"></div></center>
         </div>
         </div>
