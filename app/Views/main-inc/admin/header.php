@@ -62,6 +62,7 @@
                             </a>
                             <hr class="bg-light">
                         </li>
+                        <?php $session = \Config\Services::session(); if(strtoupper($session->get('nama_tingkat_adm')) != 'RT'): ?>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="/realisasi">
                                 <span data-feather="file"></span>
@@ -69,6 +70,7 @@
                             </a>
                             <hr class="bg-light">
                         </li>
+                        <?php endif ?>
                         <?php $session = \Config\Services::session(); if($session->get('nama_tingkat_adm') == 'Desa'): ?>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="/plafon">
