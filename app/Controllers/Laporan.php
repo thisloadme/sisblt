@@ -44,7 +44,7 @@ class Laporan extends BaseController
 
             $excel->setActiveSheetIndex(0)->getStyle('B' . $numrow)->getNumberFormat()->setFormatCode('###');
             $excel->setActiveSheetIndex(0)->getStyle('D'.$numrow)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-            $excel->setActiveSheetIndex(0)->getStyle('A'.$numrow.':G'.$numrow)->applyFromArray($styleArray);
+            $excel->setActiveSheetIndex(0)->getStyle('A'.$numrow.':E'.$numrow)->applyFromArray($styleArray);
             $numrow++;
         }
         $writer = new Xlsx($excel);
