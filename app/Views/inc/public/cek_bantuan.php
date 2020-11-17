@@ -56,7 +56,7 @@
                     for (i = 0; i < row.data.length; i++) {
                         $('#nama_penerima').text('Atas Nama '+row.data[i].nama_penduduk);
                         $('#status').text('Status '+row.data[i].nama_status);
-                        if(row.data[i].id_status == 6){
+                        if(row.data[i].id_status == 3){
                             $('#noantri').text('No Antrian '+row.data[i].id_pengajuan);
                         }
                     }
